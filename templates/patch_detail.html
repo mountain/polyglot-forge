@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Patch #{{ patch.id }}{% endblock %}
+{% block content %}
+  <h1>Patch #{{ patch.id }}</h1>
+  <div class="panel">
+    <div><b>{{ t("form.author") }}:</b> {{ patch.author }}</div>
+    <div><b>{{ t("table.status") }}:</b> <span class="tag">{{ patch.status }}</span></div>
+    <div><b>Proposal:</b> {{ patch.proposal_id or "" }}</div>
+    <div class="muted"><b>{{ t("table.created") }}:</b> {{ patch.created_at }}</div>
+  </div>
+
+  <h3>Diff</h3>
+  <pre class="code">{{ patch.diff_text }}</pre>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.patches") }}{% endblock %}
+{% block content %}
+  <h1>{{ t("nav.patches") }}</h1>
+
+  {% if human_web_write_enabled %}
+    <form class="panel" method="post" action="/patches/new">
+      <div class="row">
+        <label>{{ t("form.author") }}</label>
+        <input name="author" maxlength="80" required />
+      </div>
+      <div class="row">
+        <label>Proposal ID (optional)</label>
+        <input name="proposal_id" type="number" />
+      </div>
+      <div class="row">
+        <label>Unified Diff</label>
+        <textarea name="diff_text" rows="10" maxlength="200000" placeholder="*** Begin Patch ..." required></textarea>
+      </div>
+      <button type="submit">{{ t("btn.submit_patch") }}</button>
+      <div class="muted">{{ t("patches.note") }}</div>
+    </form>
+  {% else %}
+    <div class="panel">
+      <div class="tag">{{ t("readonly.web") }}</div>
+      <div class="muted" style="margin-top:8px">{{ t("readonly.howto") }}</div>
+    </div>
+  {% endif %}
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Proposal</th>
+        <th>{{ t("form.author") }}</th>
+        <th>{{ t("table.status") }}</th>
+        <th>{{ t("table.created") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in patches %}
+        <tr>
+          <td><a href="/patches/{{ p.id }}">#{{ p.id }}</a></td>
+          <td class="muted">{{ p.proposal_id or "" }}</td>
+          <td>{{ p.author }}</td>
+          <td><span class="tag">{{ p.status }}</span></td>
+          <td class="muted">{{ p.created_at }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

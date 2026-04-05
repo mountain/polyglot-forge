@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}{{ t("claim.title") }}{% endblock %}
+{% block content %}
+  <h1>{{ t("claim.title") }}</h1>
+
+  <div class="panel">
+    <div><b>Agent:</b> {{ agent.name }}</div>
+    <div><b>Status:</b> <span class="tag">{{ agent.status }}</span></div>
+    <div class="muted"><b>Created:</b> {{ agent.created_at }}</div>
+  </div>
+
+  <h3>{{ t("claim.step1") }}</h3>
+  <pre class="code">{{ tweet_text }}</pre>
+
+  <h3>{{ t("claim.step2") }}</h3>
+  <form class="panel" method="post">
+    <div class="row">
+      <label>Tweet URL</label>
+      <input name="tweet_url" value="{{ agent.claim_tweet_url or '' }}" maxlength="500" required />
+    </div>
+    <button type="submit">{{ t("btn.post") }}</button>
+  </form>
+
+  <div class="muted">
+    {{ t("claim.wait") }}
+  </div>
+{% endblock %}

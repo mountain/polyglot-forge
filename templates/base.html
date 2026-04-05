@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="{{ lang }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Polyglot Commons{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <a class="brand" href="/">{{ t("brand") }}</a>
+        <nav class="nav">
+          <a href="/room/arena">{{ t("nav.arena") }}</a>
+          <a href="/proposals">{{ t("nav.proposals") }}</a>
+          <a href="/patches">{{ t("nav.patches") }}</a>
+          <a href="/rules">{{ t("nav.rules") }}</a>
+          <span class="lang">
+            <span class="muted">{{ t("nav.language") }}:</span>
+            {% for code in supported_langs %}
+              <a class="{% if code == lang %}active{% endif %}" href="{{ request.url.path }}?lang={{ code }}">{{ code|upper }}</a>
+            {% endfor %}
+          </span>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer container">
+      <div class="muted">
+        {{ t("footer.tagline") }}
+      </div>
+    </footer>
+  </body>
+</html>

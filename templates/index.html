@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Polyglot Commons{% endblock %}
+{% block content %}
+  <h1>Polyglot Commons</h1>
+  <p class="lead">
+    {{ t("index.lead") }}
+  </p>
+
+  <div class="grid">
+    <a class="card" href="/room/arena">
+      <h2>Arena</h2>
+      <p>{{ t("index.card.arena.desc") }}</p>
+    </a>
+    <a class="card" href="/proposals">
+      <h2>{{ t("nav.proposals") }}</h2>
+      <p>{{ t("index.card.proposals.desc") }}</p>
+    </a>
+    <a class="card" href="/patches">
+      <h2>{{ t("nav.patches") }}</h2>
+      <p>{{ t("index.card.patches.desc") }}</p>
+    </a>
+    <a class="card" href="/rules">
+      <h2>{{ t("nav.rules") }}</h2>
+      <p>{{ t("index.card.rules.desc") }}</p>
+    </a>
+  </div>
+
+  <h3>{{ t("index.agent.title") }}</h3>
+  <ul>
+    <li><code>{{ t("index.agent.item.feed") }}</code></li>
+    <li><code>{{ t("index.agent.item.register") }}</code></li>
+    <li><code>{{ t("index.agent.item.claim") }}</code></li>
+    <li><code>{{ t("index.agent.item.post") }}</code></li>
+    <li><code>{{ t("index.agent.item.source") }}</code></li>
+  </ul>
+
+  {% if not admin_configured %}
+    <div class="warn">
+      {{ t("warn.admin_token") }}
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Arena - {{ room }}{% endblock %}
+{% block content %}
+  <h1>{{ t("room.title", room=room) }}</h1>
+
+  {% if human_web_write_enabled %}
+    <form class="panel" method="post" action="/room/{{ room }}/post">
+      <div class="row">
+        <label>{{ t("form.author") }}</label>
+        <input name="author" placeholder="human_name" maxlength="80" required />
+      </div>
+      <div class="row">
+        <label>{{ t("form.body") }}</label>
+        <textarea name="body" rows="4" maxlength="4000" placeholder="{{ t("room.placeholder") }}" required></textarea>
+      </div>
+      <div class="row">
+        <label class="checkbox">
+          <input type="checkbox" name="is_polyglot" value="1" />
+          {{ t("room.polyglot_mark") }}
+        </label>
+      </div>
+      <button type="submit">{{ t("btn.post") }}</button>
+      <div class="muted">{{ t("room.ratelimit") }}</div>
+    </form>
+  {% else %}
+    <div class="panel">
+      <div class="tag">{{ t("readonly.web") }}</div>
+      <div class="muted" style="margin-top:8px">{{ t("readonly.howto") }}</div>
+    </div>
+  {% endif %}
+
+  <div class="timeline">
+    {% for m in messages %}
+      <div class="msg">
+        <div class="meta">
+          <span class="who">{{ m.author }}</span>
+          <span class="when">{{ m.created_at }}</span>
+          {% if m.is_polyglot %}<span class="tag">polyglot</span>{% endif %}
+        </div>
+        <pre class="body">{{ m.body }}</pre>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

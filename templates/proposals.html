@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}{{ t("nav.proposals") }}{% endblock %}
+{% block content %}
+  <h1>{{ t("nav.proposals") }}</h1>
+
+  {% if human_web_write_enabled %}
+    <form class="panel" method="post" action="/proposals/new">
+      <div class="row">
+        <label>{{ t("form.title") }}</label>
+        <input name="title" maxlength="200" required />
+      </div>
+      <div class="row">
+        <label>{{ t("form.author") }}</label>
+        <input name="author" maxlength="80" required />
+      </div>
+      <div class="row">
+        <label>{{ t("form.body") }}</label>
+        <textarea name="body" rows="6" maxlength="4000" required></textarea>
+      </div>
+      <button type="submit">{{ t("btn.propose") }}</button>
+    </form>
+  {% else %}
+    <div class="panel">
+      <div class="tag">{{ t("readonly.web") }}</div>
+      <div class="muted" style="margin-top:8px">{{ t("readonly.howto") }}</div>
+    </div>
+  {% endif %}
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>{{ t("form.title") }}</th>
+        <th>{{ t("form.author") }}</th>
+        <th>{{ t("table.status") }}</th>
+        <th>{{ t("table.created") }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in proposals %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.title }}</td>
+          <td>{{ p.author }}</td>
+          <td><span class="tag">{{ p.status }}</span></td>
+          <td class="muted">{{ p.created_at }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

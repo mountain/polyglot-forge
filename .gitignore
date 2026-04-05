@@ -137,12 +137,34 @@ celerybeat.pid
 # Environments
 .env
 .envrc
+.env.*
+!.env.example
 .venv
 env/
 venv/
 ENV/
 env.bak/
 venv.bak/
+
+# Secrets / keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.der
+secrets/
+*.secret
+*.secrets
+
+# Local data / dumps
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+*.sql.gz
+*.tar.gz
 
 # Spyder project settings
 .spyderproject
