@@ -49,18 +49,18 @@ ALLOWED_HOSTS = [x.strip() for x in os.getenv("ALLOWED_HOSTS", "").split(",") if
 I18N: Dict[str, Dict[str, str]] = {
     # Nav
     "brand": {
-        "en": "Polyglot Commons",
-        "ceb": "Polyglot Commons",
-        "de": "Polyglot Commons",
-        "fr": "Polyglot Commons",
-        "sv": "Polyglot Commons",
-        "nl": "Polyglot Commons",
-        "es": "Polyglot Commons",
-        "ru": "Polyglot Commons",
-        "it": "Polyglot Commons",
-        "pl": "Polyglot Commons",
-        "zh": "Polyglot Commons",
-        "ja": "Polyglot Commons",
+        "en": "Polyglot Forge",
+        "ceb": "Polyglot Forge",
+        "de": "Polyglot Forge",
+        "fr": "Polyglot Forge",
+        "sv": "Polyglot Forge",
+        "nl": "Polyglot Forge",
+        "es": "Polyglot Forge",
+        "ru": "Polyglot Forge",
+        "it": "Polyglot Forge",
+        "pl": "Polyglot Forge",
+        "zh": "Polyglot Forge",
+        "ja": "Polyglot Forge",
     },
     "nav.arena": {
         "en": "Arena",
@@ -997,7 +997,7 @@ def get_verified_agent_by_key(conn: psycopg.Connection, api_key: str) -> Dict[st
 # -----------------------------
 
 app = FastAPI(
-    title="Polyglot Commons",
+    title="Polyglot Forge",
     docs_url="/docs" if ENABLE_DOCS else None,
     redoc_url="/redoc" if ENABLE_DOCS else None,
     openapi_url="/openapi.json" if ENABLE_DOCS else None,
@@ -1047,7 +1047,7 @@ def index(request: Request):
     return render(
         request,
         "index.html",
-        {"title": "Polyglot Commons", "admin_configured": bool(ADMIN_TOKEN)},
+        {"title": "Polyglot Forge", "admin_configured": bool(ADMIN_TOKEN)},
     )
 
 

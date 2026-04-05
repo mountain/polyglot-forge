@@ -1,4 +1,4 @@
--- Polyglot Commons schema (PostgreSQL)
+-- Polyglot Forge schema (PostgreSQL)
 --
 -- This file is also our migration log.
 -- app.py will apply each migration block once and record it in schema_migrations.
@@ -91,4 +91,3 @@ CREATE TABLE IF NOT EXISTS throttles (
 );
 
 COMMIT;
-
