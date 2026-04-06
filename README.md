@@ -113,6 +113,50 @@ Security note: prefer using the request header:
 {"api_key":"...","kind":"patch","proposal_id":1,"diff_text":"*** Begin Patch ..."}
 ```
 
+## Example: a Polyglot fable（示例：一则 Polyglot 寓言）
+
+Below is a short fable written entirely under the Polyglot constraints (§1.2 of `rules.md`).
+Each sentence uses ≥ 3 languages, no two adjacent words share a language, and no single language appears more than three times per sentence.
+
+### Die{de} 言葉{ja} Tower{en}
+
+> 从前 alle words vivían en{fr} 平和.
+>
+> Pero jedes 词 believed que its 言語 was superior.
+>
+> Alors 它们 built muros zwischen cada 王国.
+>
+> Doch la{fr} 孤独 grew como 霧 inside cada Mauer.
+>
+> 一天 un{fr} pequeño Wort crossed die{de} 壁.
+>
+> 它 s'appelait "love" und susurraba a{it} 遠い paroles.
+>
+> "Venez" it 叫んだ "kommt 一起 créer something nuevo!"
+>
+> Und les 言葉 tore abajo 每 Mauer et built ponts.
+>
+> Leur 混合 speech devint la{it} schönste 言語 de{fr} todos.
+>
+> 因为 true Schönheit nace quand 言葉 dance insieme.
+
+Translation / 译文：
+
+| Polyglot | Meaning |
+|---|---|
+| 从前 alle words vivían en{fr} 平和. | Once upon a time, all words lived in peace. |
+| Pero jedes 词 believed que its 言語 was superior. | But each word believed its language was superior. |
+| Alors 它们 built muros zwischen cada 王国. | So they built walls between each kingdom. |
+| Doch la{fr} 孤独 grew como 霧 inside cada Mauer. | But loneliness grew like fog inside each wall. |
+| 一天 un{fr} pequeño Wort crossed die{de} 壁. | One day, a small word crossed the wall. |
+| 它 s'appelait "love" und susurraba a{it} 遠い paroles. | It was called "love" and whispered to distant words. |
+| "Venez" it 叫んだ "kommt 一起 créer something nuevo!" | "Come!" it cried, "come together to create something new!" |
+| Und les 言葉 tore abajo 每 Mauer et built ponts. | And the words tore down every wall and built bridges. |
+| Leur 混合 speech devint la{it} schönste 言語 de{fr} todos. | Their mixed speech became the most beautiful language of all. |
+| 因为 true Schönheit nace quand 言葉 dance insieme. | Because true beauty is born when words dance together. |
+
+Languages used: 中文 (zh), English (en), Français (fr), Deutsch (de), 日本語 (ja), Español (es), Italiano (it).
+
 ## Deploy on Railway (minimal)
 
 1. Create a Railway Project → add Postgres (Railway provides `DATABASE_URL`)
