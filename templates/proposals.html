@@ -7,15 +7,15 @@
     <form class="panel" method="post" action="/proposals/new">
       <div class="row">
         <label>{{ t("form.title") }}</label>
-        <input name="title" maxlength="200" required />
+        <input name="title" maxlength="200" dir="auto" required />
       </div>
       <div class="row">
         <label>{{ t("form.author") }}</label>
-        <input name="author" maxlength="80" required />
+        <input name="author" maxlength="80" dir="auto" required />
       </div>
       <div class="row">
         <label>{{ t("form.body") }}</label>
-        <textarea name="body" rows="6" maxlength="4000" required></textarea>
+        <textarea name="body" rows="6" maxlength="4000" dir="auto" required></textarea>
       </div>
       <button type="submit">{{ t("btn.propose") }}</button>
     </form>
@@ -40,10 +40,10 @@
       {% for p in proposals %}
         <tr>
           <td>{{ p.id }}</td>
-          <td>{{ p.title }}</td>
-          <td>{{ p.author }}</td>
+          <td><bdi>{{ p.title }}</bdi></td>
+          <td><bdi>{{ p.author }}</bdi></td>
           <td><span class="tag">{{ p.status }}</span></td>
-          <td class="muted">{{ p.created_at }}</td>
+          <td class="muted" dir="ltr">{{ p.created_at }}</td>
         </tr>
       {% endfor %}
     </tbody>

@@ -14,9 +14,41 @@ Allowed source directories/files:
 - `README.md`
 - `prompts/`
 - `templates/`
-- `static/`
+- `static/` (including `static/i18n/`: language catalog + UI translations)
 - `requirements.txt` (deployment metadata)
 - `.railway/railway.ts` (Railway IaC: service, start command, healthcheck)
+
+## Languages and layout (i18n / RTL)
+
+### Catalog and coverage
+
+- `static/i18n/languages.json` lists languages with an estimated **1,000,000+ total speakers**.
+- The estimate comes from CLDR 49 `territoryInfo.languagePopulation` summed across territories. It counts first- and additional-language speakers where CLDR supplies them, so the aggregate can exceed world population and is an approximation, not a census.
+- Each entry carries `code`, `native`, `en`, `script`, `dir`, and `speakers`.
+- CLDR reports some languages separately by script or regional tag (for example `zh` / `zh-Hant`, `pa` / `pa-Arab`, `sr` / `sr-Latn`). These variants are kept because they can have different writing directions or UI translations; their speaker estimates may overlap.
+- UI strings live in `static/i18n/<code>.json`; English is the base language.
+- Missing translations fall back along the tag chain (for example `zh-Hant` → `zh` → `en`). A language can therefore ship with a complete catalog entry before its UI translation is complete; `/languages` shows the current UI coverage.
+
+### Choosing a language
+
+Precedence: `?lang=` query → `lang` cookie → `Accept-Language` → English.
+
+- The last five choices are kept in `lang_recent` and shown as suggestions.
+- Common aliases are normalized (`zh-TW`/`zh-HK` → `zh-Hant`, `zh-CN`/`zh-SG` → `zh`, `pt-BR` → `pt`, `iw` → `he`, `in` → `id`, and similar).
+- Room keys such as `arena` are stable identifiers in URLs, the API, and the database. Only their display labels are localized.
+
+### Limited home page, complete catalog
+
+The home page shows the current language, suggestions, the top eight languages by estimated speakers, and a link to the full catalog. It never renders all entries.
+
+`/languages` is the complete, server-rendered catalog (no JavaScript required). It supports `?q=` search over native names, English names, ISO codes, and script names, and groups entries by writing script.
+
+### RTL and LTR
+
+- The document direction follows the selected UI language: `<html lang="…" dir="rtl">` or `dir="ltr"`.
+- User-generated content is isolated with `dir="auto"` / `unicode-bidi: plaintext`, so an Arabic message inside an English UI still renders correctly (and vice versa).
+- Code, diffs, URLs, and the rules document stay explicitly LTR.
+- Layout uses CSS logical properties (`margin-inline-start`, `text-align: start`, `inset-inline-end`) so navigation, tables, and language menus mirror correctly in RTL.
 
 ## 运行
 

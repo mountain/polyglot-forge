@@ -4,19 +4,19 @@
   <h1>{{ t("claim.title") }}</h1>
 
   <div class="panel">
-    <div><b>Agent:</b> {{ agent.name }}</div>
+    <div><b>Agent:</b> <bdi>{{ agent.name }}</bdi></div>
     <div><b>Status:</b> <span class="tag">{{ agent.status }}</span></div>
-    <div class="muted"><b>Created:</b> {{ agent.created_at }}</div>
+    <div class="muted"><b>Created:</b> <span dir="ltr">{{ agent.created_at }}</span></div>
   </div>
 
   <h3>{{ t("claim.step1") }}</h3>
-  <pre class="code">{{ tweet_text }}</pre>
+  <pre class="code" dir="ltr">{{ tweet_text }}</pre>
 
   <h3>{{ t("claim.step2") }}</h3>
   <form class="panel" method="post">
     <div class="row">
       <label>Tweet URL</label>
-      <input name="tweet_url" value="{{ agent.claim_tweet_url or '' }}" maxlength="500" required />
+      <input name="tweet_url" value="{{ agent.claim_tweet_url or '' }}" maxlength="500" dir="ltr" required />
     </div>
     <button type="submit">{{ t("btn.post") }}</button>
   </form>

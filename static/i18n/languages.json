@@ -1,0 +1,2783 @@
+{
+  "version": 1,
+  "source": "CLDR 49 territoryInfo languagePopulation (estimated total speakers)",
+  "threshold": 1000000,
+  "languages": [
+    {
+      "code": "en",
+      "native": "English",
+      "en": "English",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1733041002
+    },
+    {
+      "code": "zh",
+      "native": "中文",
+      "en": "Chinese",
+      "script": "Hans",
+      "dir": "ltr",
+      "speakers": 1285540177
+    },
+    {
+      "code": "hi",
+      "native": "हिन्दी",
+      "en": "Hindi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 580318483
+    },
+    {
+      "code": "es",
+      "native": "español",
+      "en": "Spanish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 512398768
+    },
+    {
+      "code": "ar",
+      "native": "العربية",
+      "en": "Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 378792526
+    },
+    {
+      "code": "fr",
+      "native": "français",
+      "en": "French",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 332956351
+    },
+    {
+      "code": "ur",
+      "native": "اردو",
+      "en": "Urdu",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 313093257
+    },
+    {
+      "code": "bn",
+      "native": "বাংলা",
+      "en": "Bangla",
+      "script": "Beng",
+      "dir": "ltr",
+      "speakers": 279972074
+    },
+    {
+      "code": "pt",
+      "native": "português",
+      "en": "Portuguese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 249463919
+    },
+    {
+      "code": "ru",
+      "native": "русский",
+      "en": "Russian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 208192519
+    },
+    {
+      "code": "sw",
+      "native": "Kiswahili",
+      "en": "Swahili",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 194102079
+    },
+    {
+      "code": "id",
+      "native": "Bahasa Indonesia",
+      "en": "Indonesian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 180640152
+    },
+    {
+      "code": "pa-Arab",
+      "native": "پنجابی",
+      "en": "Punjabi (Arabic)",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 176654800
+    },
+    {
+      "code": "de",
+      "native": "Deutsch",
+      "en": "German",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 142985683
+    },
+    {
+      "code": "ja",
+      "native": "日本語",
+      "en": "Japanese",
+      "script": "Jpan",
+      "dir": "ltr",
+      "speakers": 117644926
+    },
+    {
+      "code": "te",
+      "native": "తెలుగు",
+      "en": "Telugu",
+      "script": "Telu",
+      "dir": "ltr",
+      "speakers": 101457360
+    },
+    {
+      "code": "lah",
+      "native": "لہندا پنجابی",
+      "en": "Western Panjabi",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 100980828
+    },
+    {
+      "code": "mr",
+      "native": "मराठी",
+      "en": "Marathi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 98639100
+    },
+    {
+      "code": "jv",
+      "native": "Jawa",
+      "en": "Javanese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 96236284
+    },
+    {
+      "code": "vi",
+      "native": "Tiếng Việt",
+      "en": "Vietnamese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 92370781
+    },
+    {
+      "code": "ta",
+      "native": "தமிழ்",
+      "en": "Tamil",
+      "script": "Taml",
+      "dir": "ltr",
+      "speakers": 90776934
+    },
+    {
+      "code": "fa",
+      "native": "فارسی",
+      "en": "Persian",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 89208446
+    },
+    {
+      "code": "wuu",
+      "native": "吴语",
+      "en": "Wu Chinese",
+      "script": "Hans",
+      "dir": "ltr",
+      "speakers": 84962400
+    },
+    {
+      "code": "tr",
+      "native": "Türkçe",
+      "en": "Turkish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 82419542
+    },
+    {
+      "code": "yue",
+      "native": "粵語",
+      "en": "Cantonese",
+      "script": "Hant",
+      "dir": "ltr",
+      "speakers": 81658818
+    },
+    {
+      "code": "ko",
+      "native": "한국어",
+      "en": "Korean",
+      "script": "Kore",
+      "dir": "ltr",
+      "speakers": 79278717
+    },
+    {
+      "code": "yue-Hans",
+      "native": "粤语",
+      "en": "Cantonese (Simplified)",
+      "script": "Hans",
+      "dir": "ltr",
+      "speakers": 73634080
+    },
+    {
+      "code": "fil",
+      "native": "Filipino",
+      "en": "Filipino",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 73355058
+    },
+    {
+      "code": "arz",
+      "native": "العامية المصرية",
+      "en": "Egyptian Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 71198080
+    },
+    {
+      "code": "it",
+      "native": "italiano",
+      "en": "Italian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 70475319
+    },
+    {
+      "code": "gu",
+      "native": "ગુજરાતી",
+      "en": "Gujarati",
+      "script": "Gujr",
+      "dir": "ltr",
+      "speakers": 65626183
+    },
+    {
+      "code": "ps",
+      "native": "پښتو",
+      "en": "Pashto",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 58062881
+    },
+    {
+      "code": "th",
+      "native": "ไทย",
+      "en": "Thai",
+      "script": "Thai",
+      "dir": "ltr",
+      "speakers": 55978999
+    },
+    {
+      "code": "kn",
+      "native": "ಕನ್ನಡ",
+      "en": "Kannada",
+      "script": "Knda",
+      "dir": "ltr",
+      "speakers": 52137810
+    },
+    {
+      "code": "pcm",
+      "native": "Naijíriá Píjin",
+      "en": "Nigerian Pidgin",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 49716870
+    },
+    {
+      "code": "ml",
+      "native": "മലയാളം",
+      "en": "Malayalam",
+      "script": "Mlym",
+      "dir": "ltr",
+      "speakers": 45936455
+    },
+    {
+      "code": "or",
+      "native": "ଓଡ଼ିଆ",
+      "en": "Odia",
+      "script": "Orya",
+      "dir": "ltr",
+      "speakers": 45092160
+    },
+    {
+      "code": "apc",
+      "native": "العامية الشمالية",
+      "en": "North Levantine Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 43682528
+    },
+    {
+      "code": "pa",
+      "native": "ਪੰਜਾਬੀ",
+      "en": "Punjabi",
+      "script": "Guru",
+      "dir": "ltr",
+      "speakers": 42962848
+    },
+    {
+      "code": "ha",
+      "native": "Hausa",
+      "en": "Hausa",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 41875124
+    },
+    {
+      "code": "sd",
+      "native": "سنڌي",
+      "en": "Sindhi",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 41518338
+    },
+    {
+      "code": "pl",
+      "native": "polski",
+      "en": "Polish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 41500501
+    },
+    {
+      "code": "hsn",
+      "native": "湘语",
+      "en": "Xiang Chinese",
+      "script": "Hans",
+      "dir": "ltr",
+      "speakers": 41065160
+    },
+    {
+      "code": "am",
+      "native": "አማርኛ",
+      "en": "Amharic",
+      "script": "Ethi",
+      "dir": "ltr",
+      "speakers": 39176975
+    },
+    {
+      "code": "zh-Hant",
+      "native": "繁體中文",
+      "en": "Chinese (Traditional)",
+      "script": "Hant",
+      "dir": "ltr",
+      "speakers": 39078482
+    },
+    {
+      "code": "arq",
+      "native": "الدارجة الجزائرية",
+      "en": "Algerian Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 39028675
+    },
+    {
+      "code": "om",
+      "native": "Oromoo",
+      "en": "Oromo",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 38264431
+    },
+    {
+      "code": "my",
+      "native": "မြန်မာ",
+      "en": "Burmese",
+      "script": "Mymr",
+      "dir": "ltr",
+      "speakers": 37171608
+    },
+    {
+      "code": "ms",
+      "native": "Bahasa Melayu",
+      "en": "Malay",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 37099582
+    },
+    {
+      "code": "bho",
+      "native": "भोजपुरी",
+      "en": "Bhojpuri",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 34639016
+    },
+    {
+      "code": "su",
+      "native": "Basa Sunda",
+      "en": "Sundanese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 33787440
+    },
+    {
+      "code": "nl",
+      "native": "Nederlands",
+      "en": "Dutch",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 32854898
+    },
+    {
+      "code": "hak",
+      "native": "客家语",
+      "en": "Hakka Chinese",
+      "script": "Hans",
+      "dir": "ltr",
+      "speakers": 32828144
+    },
+    {
+      "code": "ary",
+      "native": "الدارجة المغربية",
+      "en": "Moroccan Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 32527212
+    },
+    {
+      "code": "uz",
+      "native": "o‘zbek",
+      "en": "Uzbek",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 31800898
+    },
+    {
+      "code": "yo",
+      "native": "Èdè Yorùbá",
+      "en": "Yoruba",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 31761816
+    },
+    {
+      "code": "apd",
+      "native": "العربية السودانية",
+      "en": "Sudanese Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 30785053
+    },
+    {
+      "code": "ig",
+      "native": "Asụsụ Igbo",
+      "en": "Igbo",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 30777110
+    },
+    {
+      "code": "skr",
+      "native": "سرائیکی",
+      "en": "Saraiki",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 30283680
+    },
+    {
+      "code": "ceb",
+      "native": "Cebuano",
+      "en": "Cebuano",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 28386480
+    },
+    {
+      "code": "awa",
+      "native": "अवधी",
+      "en": "Awadhi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 27458163
+    },
+    {
+      "code": "nan",
+      "native": "闽南语",
+      "en": "Min Nan Chinese",
+      "script": "Hans",
+      "dir": "ltr",
+      "speakers": 27254411
+    },
+    {
+      "code": "mg",
+      "native": "Malagasy",
+      "en": "Malagasy",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 26507430
+    },
+    {
+      "code": "uk",
+      "native": "українська",
+      "en": "Ukrainian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 24728362
+    },
+    {
+      "code": "gan",
+      "native": "赣语",
+      "en": "Gan Chinese",
+      "script": "Hans",
+      "dir": "ltr",
+      "speakers": 24072680
+    },
+    {
+      "code": "bar",
+      "native": "Boarisch",
+      "en": "Bavarian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 22819828
+    },
+    {
+      "code": "az-Arab",
+      "native": "آذربایجان دیلی",
+      "en": "Azerbaijani (Arabic)",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 22517134
+    },
+    {
+      "code": "ne",
+      "native": "नेपाली",
+      "en": "Nepali",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 21735357
+    },
+    {
+      "code": "mai",
+      "native": "मैथिली",
+      "en": "Maithili",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 20333024
+    },
+    {
+      "code": "ro",
+      "native": "română",
+      "en": "Romanian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 20043507
+    },
+    {
+      "code": "ny",
+      "native": "Chichewa",
+      "en": "Nyanja",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 18855692
+    },
+    {
+      "code": "so",
+      "native": "Soomaali",
+      "en": "Somali",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 18630626
+    },
+    {
+      "code": "as",
+      "native": "অসমীয়া",
+      "en": "Assamese",
+      "script": "Beng",
+      "dir": "ltr",
+      "speakers": 18318690
+    },
+    {
+      "code": "mad",
+      "native": "Bhâsa Mâdhorâ",
+      "en": "Madurese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 17762520
+    },
+    {
+      "code": "rkt",
+      "native": "रंगपुरी",
+      "en": "Rangpuri",
+      "script": "Beng",
+      "dir": "ltr",
+      "speakers": 17024564
+    },
+    {
+      "code": "bgc",
+      "native": "हरियाणवी",
+      "en": "Haryanvi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 16909560
+    },
+    {
+      "code": "mag",
+      "native": "मगही",
+      "en": "Magahi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 16909560
+    },
+    {
+      "code": "mwr",
+      "native": "मारवाड़ी",
+      "en": "Marwari",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 16909560
+    },
+    {
+      "code": "tts",
+      "native": "ภาษาอีสาน",
+      "en": "Northeastern Thai",
+      "script": "Thai",
+      "dir": "ltr",
+      "speakers": 16781040
+    },
+    {
+      "code": "fuv",
+      "native": "Nigerian Fulfulde",
+      "en": "Nigerian Fulfulde",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 15862049
+    },
+    {
+      "code": "hne",
+      "native": "छत्तीसगढ़ी",
+      "en": "Chhattisgarhi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 15500430
+    },
+    {
+      "code": "km",
+      "native": "ខ្មែរ",
+      "en": "Khmer",
+      "script": "Khmr",
+      "dir": "ltr",
+      "speakers": 15186693
+    },
+    {
+      "code": "zu",
+      "native": "isiZulu",
+      "en": "Zulu",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 14969091
+    },
+    {
+      "code": "si",
+      "native": "සිංහල",
+      "en": "Sinhala",
+      "script": "Sinh",
+      "dir": "ltr",
+      "speakers": 14948168
+    },
+    {
+      "code": "dcc",
+      "native": "دکنی",
+      "en": "Deccan",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 13950387
+    },
+    {
+      "code": "sn",
+      "native": "chiShona",
+      "en": "Shona",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 13891824
+    },
+    {
+      "code": "ak",
+      "native": "Akan",
+      "en": "Akan",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 13489749
+    },
+    {
+      "code": "nan-Hant",
+      "native": "Min Nan Chinese（Traditional）",
+      "en": "Min Nan Chinese (Traditional)",
+      "script": "Hant",
+      "dir": "ltr",
+      "speakers": 13473165
+    },
+    {
+      "code": "sv",
+      "native": "svenska",
+      "en": "Swedish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 13338377
+    },
+    {
+      "code": "kk",
+      "native": "қазақ тілі",
+      "en": "Kazakh",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 13248631
+    },
+    {
+      "code": "cs",
+      "native": "čeština",
+      "en": "Czech",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 13236058
+    },
+    {
+      "code": "wo",
+      "native": "Wolof",
+      "en": "Wolof",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 13203204
+    },
+    {
+      "code": "hu",
+      "native": "magyar",
+      "en": "Hungarian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 12313192
+    },
+    {
+      "code": "el",
+      "native": "Ελληνικά",
+      "en": "Greek",
+      "script": "Grek",
+      "dir": "ltr",
+      "speakers": 12249402
+    },
+    {
+      "code": "nds",
+      "native": "Neddersass’sch",
+      "en": "Low German",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 12049256
+    },
+    {
+      "code": "rw",
+      "native": "Ikinyarwanda",
+      "en": "Kinyarwanda",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 11963415
+    },
+    {
+      "code": "qu",
+      "native": "Runasimi",
+      "en": "Quechua",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 11942570
+    },
+    {
+      "code": "ilo",
+      "native": "Ilokano",
+      "en": "Iloko",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 11354592
+    },
+    {
+      "code": "lua",
+      "native": "Tshiluba",
+      "en": "Luba-Lulua",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 11078688
+    },
+    {
+      "code": "ti",
+      "native": "ትግርኛ",
+      "en": "Tigrinya",
+      "script": "Ethi",
+      "dir": "ltr",
+      "speakers": 10929719
+    },
+    {
+      "code": "xh",
+      "native": "IsiXhosa",
+      "en": "Xhosa",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 10901721
+    },
+    {
+      "code": "aeb",
+      "native": "العربية التونسية",
+      "en": "Tunisian Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 10843920
+    },
+    {
+      "code": "umb",
+      "native": "Umbundu",
+      "en": "Umbundu",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 10788609
+    },
+    {
+      "code": "tg",
+      "native": "тоҷикӣ",
+      "en": "Tajik",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 10619414
+    },
+    {
+      "code": "bm",
+      "native": "bamanakan",
+      "en": "Bambara",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 10115676
+    },
+    {
+      "code": "az",
+      "native": "azərbaycan",
+      "en": "Azerbaijani",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 10101162
+    },
+    {
+      "code": "af",
+      "native": "Afrikaans",
+      "en": "Afrikaans",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 9966165
+    },
+    {
+      "code": "hil",
+      "native": "Hiligaynon",
+      "en": "Hiligaynon",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 9935268
+    },
+    {
+      "code": "ki",
+      "native": "Gĩgĩkũyũ",
+      "en": "Kikuyu",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 9901888
+    },
+    {
+      "code": "ht",
+      "native": "Kreyòl Ayisyen",
+      "en": "Haitian Creole",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 9520659
+    },
+    {
+      "code": "he",
+      "native": "עברית",
+      "en": "Hebrew",
+      "script": "Hebr",
+      "dir": "rtl",
+      "speakers": 9402620
+    },
+    {
+      "code": "kmb",
+      "native": "Kimbundu",
+      "en": "Kimbundu",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 9300525
+    },
+    {
+      "code": "mey",
+      "native": "حسانية",
+      "en": "Hassaniyya",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 9244449
+    },
+    {
+      "code": "mos",
+      "native": "Mooré",
+      "en": "Mossi",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 9216880
+    },
+    {
+      "code": "ff",
+      "native": "Pulaar",
+      "en": "Fula",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 8955865
+    },
+    {
+      "code": "bal",
+      "native": "بلۆچی",
+      "en": "Baluchi",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 8751140
+    },
+    {
+      "code": "kri",
+      "native": "Krio",
+      "en": "Krio",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 8664998
+    },
+    {
+      "code": "rn",
+      "native": "Ikirundi",
+      "en": "Rundi",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 8561763
+    },
+    {
+      "code": "ii",
+      "native": "ꆈꌠꉙ",
+      "en": "Sichuan Yi",
+      "script": "Yiii",
+      "dir": "ltr",
+      "speakers": 8496240
+    },
+    {
+      "code": "min",
+      "native": "Baso Minangkabau",
+      "en": "Minangkabau",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 8446860
+    },
+    {
+      "code": "gsw",
+      "native": "Schwiizertüütsch",
+      "en": "Swiss German",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 8439156
+    },
+    {
+      "code": "syl",
+      "native": "ꠍꠤꠟꠐꠤ",
+      "en": "Sylheti",
+      "script": "Beng",
+      "dir": "ltr",
+      "speakers": 8434850
+    },
+    {
+      "code": "zgh",
+      "native": "ⵜⴰⵎⴰⵣⵉⵖⵜ",
+      "en": "Standard Moroccan Tamazight",
+      "script": "Tfng",
+      "dir": "ltr",
+      "speakers": 8225272
+    },
+    {
+      "code": "ca",
+      "native": "català",
+      "en": "Catalan",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 8218781
+    },
+    {
+      "code": "bjj",
+      "native": "कन्नौजी",
+      "en": "Kanauji",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 7891128
+    },
+    {
+      "code": "ug",
+      "native": "ئۇيغۇرچە",
+      "en": "Uyghur",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 7791229
+    },
+    {
+      "code": "sat",
+      "native": "ᱥᱟᱱᱛᱟᱲᱤ",
+      "en": "Santali",
+      "script": "Olck",
+      "dir": "ltr",
+      "speakers": 7750215
+    },
+    {
+      "code": "sr-Latn",
+      "native": "srpski (latinica)",
+      "en": "Serbian (Latin)",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 7709590
+    },
+    {
+      "code": "bg",
+      "native": "български",
+      "en": "Bulgarian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 7684020
+    },
+    {
+      "code": "dyu",
+      "native": "Julakan",
+      "en": "Dyula",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 7373504
+    },
+    {
+      "code": "da",
+      "native": "dansk",
+      "en": "Danish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 7247744
+    },
+    {
+      "code": "ku",
+      "native": "kurdî (kurmancî)",
+      "en": "Kurdish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 7214784
+    },
+    {
+      "code": "sr",
+      "native": "српски",
+      "en": "Serbian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 7189544
+    },
+    {
+      "code": "tk",
+      "native": "türkmen dili",
+      "en": "Turkmen",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 7177805
+    },
+    {
+      "code": "tpi",
+      "native": "Tok Pisin",
+      "en": "Tok Pisin",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 7132802
+    },
+    {
+      "code": "bem",
+      "native": "Ichibemba",
+      "en": "Bemba",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 7071694
+    },
+    {
+      "code": "st",
+      "native": "Sesotho",
+      "en": "Southern Sotho",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 6957964
+    },
+    {
+      "code": "sk",
+      "native": "slovenčina",
+      "en": "Slovak",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 6809720
+    },
+    {
+      "code": "sq",
+      "native": "shqip",
+      "en": "Albanian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 6798944
+    },
+    {
+      "code": "hr",
+      "native": "hrvatski",
+      "en": "Croatian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 6790797
+    },
+    {
+      "code": "nod",
+      "native": "ᨣᩤᩴᨾᩮᩬᩥᨦ",
+      "en": "Northern Thai",
+      "script": "Lana",
+      "dir": "ltr",
+      "speakers": 6712416
+    },
+    {
+      "code": "cop",
+      "native": "ⲘⲉⲧⲢⲉⲙⲛ̀ⲭⲏⲙⲓ",
+      "en": "Coptic",
+      "script": "Copt",
+      "dir": "ltr",
+      "speakers": 6674820
+    },
+    {
+      "code": "tn",
+      "native": "Setswana",
+      "en": "Tswana",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 6529140
+    },
+    {
+      "code": "wtm",
+      "native": "मेवाती",
+      "en": "Mewati",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 6481998
+    },
+    {
+      "code": "luy",
+      "native": "Luluhia",
+      "en": "Luyia",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 6407104
+    },
+    {
+      "code": "lg",
+      "native": "Luganda",
+      "en": "Ganda",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 6406790
+    },
+    {
+      "code": "ks",
+      "native": "کٲشُر",
+      "en": "Kashmiri",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 5951564
+    },
+    {
+      "code": "bew",
+      "native": "Betawi",
+      "en": "Betawi",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5912802
+    },
+    {
+      "code": "suk",
+      "native": "Sukuma",
+      "en": "Sukuma",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5869203
+    },
+    {
+      "code": "fi",
+      "native": "suomi",
+      "en": "Finnish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5786579
+    },
+    {
+      "code": "luo",
+      "native": "Dholuo",
+      "en": "Luo (Kenya and Tanzania)",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5708147
+    },
+    {
+      "code": "nso",
+      "native": "Sesotho sa Leboa",
+      "en": "Northern Sotho",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5681604
+    },
+    {
+      "code": "ckb",
+      "native": "کوردیی ناوەندی",
+      "en": "Central Kurdish",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 5606845
+    },
+    {
+      "code": "sou",
+      "native": "ภาษาไทยถิ่นใต้",
+      "en": "Southern Thai",
+      "script": "Thai",
+      "dir": "ltr",
+      "speakers": 5593680
+    },
+    {
+      "code": "nb",
+      "native": "norsk bokmål",
+      "en": "Norwegian Bokmål",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5511222
+    },
+    {
+      "code": "no",
+      "native": "norsk",
+      "en": "Norwegian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5509731
+    },
+    {
+      "code": "lo",
+      "native": "ລາວ",
+      "en": "Lao",
+      "script": "Laoo",
+      "dir": "ltr",
+      "speakers": 5487956
+    },
+    {
+      "code": "uz-Cyrl",
+      "native": "ўзбекча (Кирил)",
+      "en": "Uzbek (Cyrillic)",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 5483754
+    },
+    {
+      "code": "hy",
+      "native": "հայերեն",
+      "en": "Armenian",
+      "script": "Armn",
+      "dir": "ltr",
+      "speakers": 5443505
+    },
+    {
+      "code": "ee",
+      "native": "eʋegbe",
+      "en": "Ewe",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5320859
+    },
+    {
+      "code": "ts",
+      "native": "Xitsonga",
+      "en": "Tsonga",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5313551
+    },
+    {
+      "code": "gn",
+      "native": "avañe’ẽ",
+      "en": "Guarani",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5268051
+    },
+    {
+      "code": "knn",
+      "native": "कोंकणी",
+      "en": "Konkani (individual language)",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 5213781
+    },
+    {
+      "code": "ban",
+      "native": "Basa Bali",
+      "en": "Balinese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5068116
+    },
+    {
+      "code": "vmf",
+      "native": "Mainfränkisch",
+      "en": "Main-Franconian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 5047146
+    },
+    {
+      "code": "ku-Arab",
+      "native": "کوردی",
+      "en": "Kurdish (Arabic)",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 4794503
+    },
+    {
+      "code": "bug",
+      "native": "ᨅᨔ ᨕᨘᨁᨗ",
+      "en": "Buginese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4532298
+    },
+    {
+      "code": "kok",
+      "native": "कोंकणी",
+      "en": "Konkani",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 4509216
+    },
+    {
+      "code": "dje",
+      "native": "Zarmaciine",
+      "en": "Zarma",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4478276
+    },
+    {
+      "code": "kam",
+      "native": "Kikamba",
+      "en": "Kamba",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4426726
+    },
+    {
+      "code": "kln",
+      "native": "Kalenjin",
+      "en": "Kalenjin",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4426726
+    },
+    {
+      "code": "mzn",
+      "native": "مازرونی",
+      "en": "Mazanderani",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 4419345
+    },
+    {
+      "code": "ka",
+      "native": "ქართული",
+      "en": "Georgian",
+      "script": "Geor",
+      "dir": "ltr",
+      "speakers": 4409180
+    },
+    {
+      "code": "za",
+      "native": "Vahcuengh",
+      "en": "Zhuang",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4389724
+    },
+    {
+      "code": "ndc",
+      "native": "Ndau",
+      "en": "Ndau",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4347923
+    },
+    {
+      "code": "vmw",
+      "native": "emakhuwa",
+      "en": "Makhuwa",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4335630
+    },
+    {
+      "code": "hno",
+      "native": "Hindko",
+      "en": "Northern Hindko",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 4290188
+    },
+    {
+      "code": "bjn",
+      "native": "Bahasa Banjar",
+      "en": "Banjar",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4228269
+    },
+    {
+      "code": "sid",
+      "native": "Sidaamu Afo",
+      "en": "Sidamo",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4149250
+    },
+    {
+      "code": "glk",
+      "native": "گیلکی",
+      "en": "Gilaki",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 4065797
+    },
+    {
+      "code": "lir",
+      "native": "Liberian English",
+      "en": "Liberian English",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 4023565
+    },
+    {
+      "code": "ln",
+      "native": "lingála",
+      "en": "Lingala",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3986653
+    },
+    {
+      "code": "sdh",
+      "native": "کوردی خوارگ",
+      "en": "Southern Kurdish",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 3977410
+    },
+    {
+      "code": "man",
+      "native": "Mandinka",
+      "en": "Mandingo",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3948592
+    },
+    {
+      "code": "man-Nkoo",
+      "native": "ߡߊ߲ߘߌ߲ߞߊ",
+      "en": "Mandingo (N’Ko)",
+      "script": "Nkoo",
+      "dir": "rtl",
+      "speakers": 3948592
+    },
+    {
+      "code": "swv",
+      "native": "शेखावाटी",
+      "en": "Shekhawati",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 3945564
+    },
+    {
+      "code": "ace",
+      "native": "Bahsa Acèh",
+      "en": "Acehnese",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3941868
+    },
+    {
+      "code": "lmo",
+      "native": "Lombard",
+      "en": "Lombard",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3838283
+    },
+    {
+      "code": "gbm",
+      "native": "गढ़वळि",
+      "en": "Garhwali",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 3804651
+    },
+    {
+      "code": "lmn",
+      "native": "लम्बाडी",
+      "en": "Lambadi",
+      "script": "Telu",
+      "dir": "ltr",
+      "speakers": 3804651
+    },
+    {
+      "code": "tiv",
+      "native": "Tiv",
+      "en": "Tiv",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3787952
+    },
+    {
+      "code": "bs",
+      "native": "bosanski",
+      "en": "Bosnian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3760683
+    },
+    {
+      "code": "bs-Cyrl",
+      "native": "босански (ћирилица)",
+      "en": "Bosnian (Cyrillic)",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 3760683
+    },
+    {
+      "code": "shn",
+      "native": "တႆး",
+      "en": "Shan",
+      "script": "Mymr",
+      "dir": "ltr",
+      "speakers": 3748859
+    },
+    {
+      "code": "mn-Mong",
+      "native": "ᠮᠣᠩᠭᠣᠯ",
+      "en": "Mongolian (Mongolian)",
+      "script": "Mong",
+      "dir": "ltr",
+      "speakers": 3681704
+    },
+    {
+      "code": "fon",
+      "native": "Fɔngbè",
+      "en": "Fon",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3674275
+    },
+    {
+      "code": "kab",
+      "native": "Taqbaylit",
+      "en": "Kabyle",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3667755
+    },
+    {
+      "code": "tzm",
+      "native": "Tamaziɣt n laṭlaṣ",
+      "en": "Central Atlas Tamazight",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3663985
+    },
+    {
+      "code": "sus",
+      "native": "Sosoxui",
+      "en": "Susu",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3630320
+    },
+    {
+      "code": "bik",
+      "native": "Bikol",
+      "en": "Bikol",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3548310
+    },
+    {
+      "code": "mfa",
+      "native": "بهاس ملايو ڤتاني",
+      "en": "Pattani Malay",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 3496050
+    },
+    {
+      "code": "war",
+      "native": "Winaray",
+      "en": "Waray",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3434688
+    },
+    {
+      "code": "ms-Arab",
+      "native": "ملايو",
+      "en": "Malay (Arabic)",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 3403837
+    },
+    {
+      "code": "gon",
+      "native": "Gondi",
+      "en": "Gondi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 3381912
+    },
+    {
+      "code": "tt",
+      "native": "татар",
+      "en": "Tatar",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 3379704
+    },
+    {
+      "code": "gl",
+      "native": "galego",
+      "en": "Galician",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3323918
+    },
+    {
+      "code": "ha-Arab",
+      "native": "هَوْسَ",
+      "en": "Hausa (Arabic)",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 3319234
+    },
+    {
+      "code": "efi",
+      "native": "Efik",
+      "en": "Efik",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3314458
+    },
+    {
+      "code": "ibb",
+      "native": "Ibibio",
+      "en": "Ibibio",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3314458
+    },
+    {
+      "code": "bci",
+      "native": "Baoulé",
+      "en": "Baoulé",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3297998
+    },
+    {
+      "code": "shi",
+      "native": "ⵜⴰⵛⵍⵃⵉⵜ",
+      "en": "Tachelhit",
+      "script": "Tfng",
+      "dir": "ltr",
+      "speakers": 3252721
+    },
+    {
+      "code": "shi-Latn",
+      "native": "Tashelḥiyt (Latin)",
+      "en": "Tachelhit (Latin)",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3252721
+    },
+    {
+      "code": "nyn",
+      "native": "Runyankore",
+      "en": "Nyankole",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 3104829
+    },
+    {
+      "code": "kfy",
+      "native": "कुमाऊँनी",
+      "en": "Kumaoni",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 3100086
+    },
+    {
+      "code": "bo",
+      "native": "བོད་སྐད་",
+      "en": "Tibetan",
+      "script": "Tibt",
+      "dir": "ltr",
+      "speakers": 3061778
+    },
+    {
+      "code": "mn",
+      "native": "монгол",
+      "en": "Mongolian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 3056609
+    },
+    {
+      "code": "be",
+      "native": "беларуская",
+      "en": "Belarusian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 3054468
+    },
+    {
+      "code": "brh",
+      "native": "براہوئی",
+      "en": "Brahui",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 3028368
+    },
+    {
+      "code": "ay",
+      "native": "Aymar aru",
+      "en": "Aymara",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2984003
+    },
+    {
+      "code": "ky",
+      "native": "кыргызча",
+      "en": "Kyrgyz",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 2962608
+    },
+    {
+      "code": "guz",
+      "native": "Ekegusii",
+      "en": "Gusii",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2854074
+    },
+    {
+      "code": "doi",
+      "native": "डोगरी",
+      "en": "Dogri",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 2818260
+    },
+    {
+      "code": "sg",
+      "native": "Sängö",
+      "en": "Sango",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2768970
+    },
+    {
+      "code": "sas",
+      "native": "Base Sasak",
+      "en": "Sasak",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2731151
+    },
+    {
+      "code": "bej",
+      "native": "بداوية",
+      "en": "Beja",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 2725234
+    },
+    {
+      "code": "fbl",
+      "native": "West Albay Bikol",
+      "en": "West Albay Bikol",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2720371
+    },
+    {
+      "code": "pam",
+      "native": "Kapampangan",
+      "en": "Pampanga",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2720371
+    },
+    {
+      "code": "jam",
+      "native": "Patwa",
+      "en": "Jamaican Creole English",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2682524
+    },
+    {
+      "code": "kru",
+      "native": "Kurukh",
+      "en": "Kurukh",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 2677347
+    },
+    {
+      "code": "cgg",
+      "native": "Rukiga",
+      "en": "Chiga",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2661282
+    },
+    {
+      "code": "lu",
+      "native": "Tshiluba",
+      "en": "Luba-Katanga",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2654269
+    },
+    {
+      "code": "xog",
+      "native": "Olusoga",
+      "en": "Soga",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2611999
+    },
+    {
+      "code": "hak-Hant",
+      "native": "Hakka Chinese（Traditional）",
+      "en": "Hakka Chinese (Traditional)",
+      "script": "Hant",
+      "dir": "ltr",
+      "speakers": 2595483
+    },
+    {
+      "code": "bbc",
+      "native": "Batak Toba",
+      "en": "Batak Toba",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2590370
+    },
+    {
+      "code": "men",
+      "native": "Mɛnde",
+      "en": "Mende",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2555117
+    },
+    {
+      "code": "sck",
+      "native": "सदरी",
+      "en": "Sadri",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 2536434
+    },
+    {
+      "code": "wbq",
+      "native": "Waddar",
+      "en": "Waddar",
+      "script": "Telu",
+      "dir": "ltr",
+      "speakers": 2536434
+    },
+    {
+      "code": "lt",
+      "native": "lietuvių",
+      "en": "Lithuanian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2405298
+    },
+    {
+      "code": "tem",
+      "native": "Timne",
+      "en": "Timne",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2371473
+    },
+    {
+      "code": "tum",
+      "native": "chiTumbuka",
+      "en": "Tumbuka",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2368894
+    },
+    {
+      "code": "haz",
+      "native": "هزارگی",
+      "en": "Hazaragi",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 2367174
+    },
+    {
+      "code": "teo",
+      "native": "Kiteso",
+      "en": "Teso",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2353060
+    },
+    {
+      "code": "ss",
+      "native": "siSwati",
+      "en": "Swati",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2345504
+    },
+    {
+      "code": "mer",
+      "native": "Kĩmĩrũ",
+      "en": "Meru",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2329856
+    },
+    {
+      "code": "aa",
+      "native": "Qafar",
+      "en": "Afar",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2305972
+    },
+    {
+      "code": "toi",
+      "native": "Tonga (Zambia)",
+      "en": "Tonga (Zambia)",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2287901
+    },
+    {
+      "code": "ngl",
+      "native": "Lomwe",
+      "en": "Lomwe",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2267868
+    },
+    {
+      "code": "xnr",
+      "native": "कांगड़ी",
+      "en": "Kangri",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 2254608
+    },
+    {
+      "code": "nym",
+      "native": "Nyamwezi",
+      "en": "Nyamwezi",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2226249
+    },
+    {
+      "code": "bgn",
+      "native": "بلوچی (رخشانی)",
+      "en": "Western Balochi",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 2186208
+    },
+    {
+      "code": "mww",
+      "native": "Hmong Daw",
+      "en": "Hmong Daw",
+      "script": "Hmnp",
+      "dir": "ltr",
+      "speakers": 2179939
+    },
+    {
+      "code": "wal",
+      "native": "ወላይታቱ",
+      "en": "Wolaytta",
+      "script": "Ethi",
+      "dir": "ltr",
+      "speakers": 2133900
+    },
+    {
+      "code": "khn",
+      "native": "Khandesi",
+      "en": "Khandesi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 2113695
+    },
+    {
+      "code": "tcy",
+      "native": "ತುಳು",
+      "en": "Tulu",
+      "script": "Knda",
+      "dir": "ltr",
+      "speakers": 2113695
+    },
+    {
+      "code": "wbr",
+      "native": "Wagdi",
+      "en": "Wagdi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 2113695
+    },
+    {
+      "code": "lrc",
+      "native": "لۊری شومالی",
+      "en": "Northern Luri",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 2112834
+    },
+    {
+      "code": "srr",
+      "native": "Seereer",
+      "en": "Serer",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2073225
+    },
+    {
+      "code": "nd",
+      "native": "isiNdebele",
+      "en": "North Ndebele",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2058048
+    },
+    {
+      "code": "oc",
+      "native": "occitan",
+      "en": "Occitan",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2055966
+    },
+    {
+      "code": "mak",
+      "native": "Makasar",
+      "en": "Makasar",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2055403
+    },
+    {
+      "code": "rif",
+      "native": "Tarifit",
+      "en": "Riffian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2045261
+    },
+    {
+      "code": "tmh",
+      "native": "Tamashek",
+      "en": "Tamashek",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 2042371
+    },
+    {
+      "code": "brx",
+      "native": "बर’",
+      "en": "Bodo",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1972782
+    },
+    {
+      "code": "sd-Deva",
+      "native": "सिंधी",
+      "en": "Sindhi (Devanagari)",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1972782
+    },
+    {
+      "code": "sl",
+      "native": "slovenščina",
+      "en": "Slovenian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1967013
+    },
+    {
+      "code": "mas",
+      "native": "Maa",
+      "en": "Masai",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1943874
+    },
+    {
+      "code": "ljp",
+      "native": "Lampung Api",
+      "en": "Lampung Api",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1942778
+    },
+    {
+      "code": "uz-Arab",
+      "native": "اوزبیک",
+      "en": "Uzbek (Arabic)",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 1885715
+    },
+    {
+      "code": "laj",
+      "native": "Lango (Uganda)",
+      "en": "Lango (Uganda)",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1872754
+    },
+    {
+      "code": "rhg",
+      "native": "𐴌𐴗𐴥𐴝𐴙𐴚𐴒𐴙𐴝",
+      "en": "Rohingya",
+      "script": "Rohg",
+      "dir": "rtl",
+      "speakers": 1872055
+    },
+    {
+      "code": "fuq",
+      "native": "Central-Eastern Niger Fulfulde",
+      "en": "Central-Eastern Niger Fulfulde",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1843996
+    },
+    {
+      "code": "rif-Tfng",
+      "native": "Tarifit (Tifinagh)",
+      "en": "Riffian (Tifinagh)",
+      "script": "Tfng",
+      "dir": "ltr",
+      "speakers": 1831992
+    },
+    {
+      "code": "noe",
+      "native": "निमाड़ी",
+      "en": "Nimadi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1831869
+    },
+    {
+      "code": "cv",
+      "native": "чӑваш чӗлхи",
+      "en": "Chuvash",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 1830673
+    },
+    {
+      "code": "ach",
+      "native": "Acoli",
+      "en": "Acoli",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1823471
+    },
+    {
+      "code": "kg",
+      "native": "Kikongo",
+      "en": "Kongo",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1731045
+    },
+    {
+      "code": "abr",
+      "native": "Abron",
+      "en": "Abron",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1729455
+    },
+    {
+      "code": "sco",
+      "native": "Scots",
+      "en": "Scots",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1711478
+    },
+    {
+      "code": "ffm",
+      "native": "Maasina Fulfulde",
+      "en": "Maasina Fulfulde",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1693276
+    },
+    {
+      "code": "bhb",
+      "native": "Bhili",
+      "en": "Bhili",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1690956
+    },
+    {
+      "code": "kde",
+      "native": "Chimakonde",
+      "en": "Makonde",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1686552
+    },
+    {
+      "code": "bin",
+      "native": "Ẹdo",
+      "en": "Bini",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1680904
+    },
+    {
+      "code": "rmt",
+      "native": "دومری",
+      "en": "Domari",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 1679351
+    },
+    {
+      "code": "pag",
+      "native": "Pangasinan",
+      "en": "Pangasinan",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1655878
+    },
+    {
+      "code": "kek",
+      "native": "Qʼeqchiʼ",
+      "en": "Kekchí",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1633484
+    },
+    {
+      "code": "dnj",
+      "native": "Dan",
+      "en": "Dan",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1628815
+    },
+    {
+      "code": "kpe",
+      "native": "Kpɛlɛɛ",
+      "en": "Kpelle",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1618926
+    },
+    {
+      "code": "mk",
+      "native": "македонски",
+      "en": "Macedonian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 1612846
+    },
+    {
+      "code": "cak",
+      "native": "Kaqchikel",
+      "en": "Kaqchikel",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1606458
+    },
+    {
+      "code": "quc",
+      "native": "Kʼicheʼ",
+      "en": "Kʼicheʼ",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1569947
+    },
+    {
+      "code": "mni",
+      "native": "মৈতৈলোন্",
+      "en": "Manipuri",
+      "script": "Beng",
+      "dir": "ltr",
+      "speakers": 1568600
+    },
+    {
+      "code": "ce",
+      "native": "нохчийн",
+      "en": "Chechen",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 1549031
+    },
+    {
+      "code": "seh",
+      "native": "sena",
+      "en": "Sena",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1534146
+    },
+    {
+      "code": "mgh",
+      "native": "Makua",
+      "en": "Makhuwa-Meetto",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1500795
+    },
+    {
+      "code": "ve",
+      "native": "tshiVenḓa",
+      "en": "Venda",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1499942
+    },
+    {
+      "code": "aln",
+      "native": "Gegnisht",
+      "en": "Gheg Albanian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1463047
+    },
+    {
+      "code": "kaa",
+      "native": "қарақалпақша",
+      "en": "Kara-Kalpak",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 1457601
+    },
+    {
+      "code": "kk-Arab",
+      "native": "قازاق تىلى",
+      "en": "Kazakh (Arabic)",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 1444926
+    },
+    {
+      "code": "myx",
+      "native": "Masaaba",
+      "en": "Masaaba",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1429207
+    },
+    {
+      "code": "bum",
+      "native": "Bulu",
+      "en": "Bulu",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1424441
+    },
+    {
+      "code": "mdh",
+      "native": "Maguindanaon",
+      "en": "Maguindanaon",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1419324
+    },
+    {
+      "code": "hi-Latn",
+      "native": "Hindi (Latin)",
+      "en": "Hindi (Latin)",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1409130
+    },
+    {
+      "code": "raj",
+      "native": "राजस्थानी",
+      "en": "Rajasthani",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1409130
+    },
+    {
+      "code": "hoc",
+      "native": "Ho",
+      "en": "Ho",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1395039
+    },
+    {
+      "code": "vec",
+      "native": "veneto",
+      "en": "Venetian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1381574
+    },
+    {
+      "code": "nn",
+      "native": "norsk nynorsk",
+      "en": "Norwegian Nynorsk",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1377432
+    },
+    {
+      "code": "mtr",
+      "native": "Mewari",
+      "en": "Mewari",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1366856
+    },
+    {
+      "code": "az-Cyrl",
+      "native": "азәрбајҹан (Кирил)",
+      "en": "Azerbaijani (Cyrillic)",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 1364176
+    },
+    {
+      "code": "fvr",
+      "native": "Fur",
+      "en": "Fur",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1362617
+    },
+    {
+      "code": "unr",
+      "native": "Mundari",
+      "en": "Mundari",
+      "script": "Beng",
+      "dir": "ltr",
+      "speakers": 1324582
+    },
+    {
+      "code": "tsg",
+      "native": "Tausug",
+      "en": "Tausug",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1301047
+    },
+    {
+      "code": "hrx",
+      "native": "Hunsrik",
+      "en": "Hunsrik",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1298307
+    },
+    {
+      "code": "snk",
+      "native": "Soninke",
+      "en": "Soninke",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1297445
+    },
+    {
+      "code": "bhi",
+      "native": "Bhilali",
+      "en": "Bhilali",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1296400
+    },
+    {
+      "code": "rej",
+      "native": "Rejang",
+      "en": "Rejang",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1295185
+    },
+    {
+      "code": "sef",
+      "native": "Cebaara Senoufo",
+      "en": "Cebaara Senoufo",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1289217
+    },
+    {
+      "code": "ga",
+      "native": "Gaeilge",
+      "en": "Irish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1254050
+    },
+    {
+      "code": "bqi",
+      "native": "بختیاری",
+      "en": "Bakhtiari",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 1237417
+    },
+    {
+      "code": "gur",
+      "native": "Frafra",
+      "en": "Frafra",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1210618
+    },
+    {
+      "code": "vls",
+      "native": "West Flemish",
+      "en": "West Flemish",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1197760
+    },
+    {
+      "code": "kxm",
+      "native": "เขมรเหนือ",
+      "en": "Northern Khmer",
+      "script": "Thai",
+      "dir": "ltr",
+      "speakers": 1188657
+    },
+    {
+      "code": "mfe",
+      "native": "kreol morisien",
+      "en": "Morisyen",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1179450
+    },
+    {
+      "code": "zza",
+      "native": "Zazaca",
+      "en": "Zaza",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1177673
+    },
+    {
+      "code": "hoj",
+      "native": "हरियाणवी",
+      "en": "Hadothi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1155487
+    },
+    {
+      "code": "gor",
+      "native": "Bahasa Hulontalo",
+      "en": "Gorontalo",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1154404
+    },
+    {
+      "code": "bez",
+      "native": "Hibena",
+      "en": "Bena",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1146856
+    },
+    {
+      "code": "ksb",
+      "native": "Kishambaa",
+      "en": "Shambala",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1146856
+    },
+    {
+      "code": "loz",
+      "native": "Silozi",
+      "en": "Lozi",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1143950
+    },
+    {
+      "code": "tig",
+      "native": "ትግረ",
+      "en": "Tigre",
+      "script": "Ethi",
+      "dir": "ltr",
+      "speakers": 1141913
+    },
+    {
+      "code": "rng",
+      "native": "Ronga",
+      "en": "Ronga",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1133934
+    },
+    {
+      "code": "kha",
+      "native": "Khasi",
+      "en": "Khasi",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1127304
+    },
+    {
+      "code": "ba",
+      "native": "башҡорт теле",
+      "en": "Bashkir",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 1126568
+    },
+    {
+      "code": "kbd",
+      "native": "къэбэрдеибзэ",
+      "en": "Kabardian",
+      "script": "Cyrl",
+      "dir": "ltr",
+      "speakers": 1126512
+    },
+    {
+      "code": "mxc",
+      "native": "Manyika",
+      "en": "Manyika",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1114776
+    },
+    {
+      "code": "mwk",
+      "native": "Kita Maninkakan",
+      "en": "Kita Maninkakan",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1099530
+    },
+    {
+      "code": "lv",
+      "native": "latviešu",
+      "en": "Latvian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1098762
+    },
+    {
+      "code": "ars",
+      "native": "اللهجة النجدية",
+      "en": "Najdi Arabic",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 1096332
+    },
+    {
+      "code": "luz",
+      "native": "لری جنوبی",
+      "en": "Southern Luri",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 1060643
+    },
+    {
+      "code": "kfr",
+      "native": "कच्छी",
+      "en": "Kachhi",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1056848
+    },
+    {
+      "code": "tly",
+      "native": "Tolışi",
+      "en": "Talysh",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1043720
+    },
+    {
+      "code": "qug",
+      "native": "Kichwa",
+      "en": "Chimborazo Highland Quichua",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1043670
+    },
+    {
+      "code": "nij",
+      "native": "Bahasa Ngaju",
+      "en": "Ngaju",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1041779
+    },
+    {
+      "code": "ada",
+      "native": "Adangme",
+      "en": "Adangme",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1037673
+    },
+    {
+      "code": "sc",
+      "native": "sardu",
+      "en": "Sardinian",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1036403
+    },
+    {
+      "code": "hnd",
+      "native": "ہندکو",
+      "en": "Southern Hindko",
+      "script": "Arab",
+      "dir": "rtl",
+      "speakers": 1034692
+    },
+    {
+      "code": "eu",
+      "native": "euskara",
+      "en": "Basque",
+      "script": "Latn",
+      "dir": "ltr",
+      "speakers": 1034495
+    },
+    {
+      "code": "new",
+      "native": "नेपाल भाषा",
+      "en": "Newari",
+      "script": "Deva",
+      "dir": "ltr",
+      "speakers": 1027039
+    }
+  ]
+}

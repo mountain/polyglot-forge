@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ t("lang.title") }} - {{ t("brand") }}{% endblock %}
+{% block content %}
+  <h1>{{ t("lang.title") }}</h1>
+
+  <form class="panel lang-search" method="get" action="/languages" role="search">
+    <input type="hidden" name="lang" value="{{ lang }}" />
+    <label for="q">{{ t("lang.search") }}</label>
+    <div class="search-row">
+      <input id="q" name="q" value="{{ query }}" type="search" maxlength="80" dir="auto" />
+      <button type="submit">{{ t("btn.search") }}</button>
+      {% if query %}
+        <a class="clear-search" href="/languages?lang={{ lang }}">{{ t("lang.title") }}</a>
+      {% endif %}
+    </div>
+    <div class="muted">
+      {{ t("lang.count", count=language_count) }} · RTL {{ rtl_count }} · LTR {{ ltr_count }}
+    </div>
+  </form>
+
+  {% if query %}
+    <p class="muted">{{ t("lang.results", count=result_count) }}</p>
+    {% if results %}
+      <ul class="lang-list">
+        {% for l in results %}
+          <li class="lang-row">
+            <a class="lang-choice {% if l.code == lang %}active{% endif %}" href="{{ lang_url(l.code) }}" hreflang="{{ l.code }}">
+              <span class="lang-native" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.native }}</span>
+              <span class="lang-en" lang="en" dir="ltr">{{ l.en }}</span>
+              <span class="lang-meta">
+                <code>{{ l.code }}</code>
+                <span>{{ l.dir|upper }}</span>
+                <span>{{ l.speakers_label }}</span>
+                {% if l.ui_percent > 0 %}
+                  <span class="tag">{{ t("lang.coverage", pct=l.ui_percent) }}</span>
+                {% else %}
+                  <span class="tag">{{ t("lang.fallback") }}</span>
+                {% endif %}
+                {% if l.code == lang %}<span class="tag">{{ t("lang.current") }}</span>{% endif %}
+              </span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="panel">{{ t("lang.no_results") }}</div>
+    {% endif %}
+  {% else %}
+    {% for group in groups %}
+      <details class="script-group" {% if loop.first %}open{% endif %}>
+        <summary>
+          <span class="group-title" lang="en" dir="ltr">{{ group.label }}</span>
+          <span class="tag">{{ group.dir|upper }}</span>
+          <span class="muted">{{ group.count }}</span>
+        </summary>
+        <ul class="lang-list">
+          {% for l in group.languages %}
+            <li class="lang-row">
+              <a class="lang-choice {% if l.code == lang %}active{% endif %}" href="{{ lang_url(l.code) }}" hreflang="{{ l.code }}">
+                <span class="lang-native" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.native }}</span>
+                <span class="lang-en" lang="en" dir="ltr">{{ l.en }}</span>
+                <span class="lang-meta">
+                  <code>{{ l.code }}</code>
+                  <span>{{ l.speakers_label }}</span>
+                  {% if l.ui_percent > 0 %}
+                    <span class="tag">{{ t("lang.coverage", pct=l.ui_percent) }}</span>
+                  {% else %}
+                    <span class="tag">{{ t("lang.fallback") }}</span>
+                  {% endif %}
+                  {% if l.code == lang %}<span class="tag">{{ t("lang.current") }}</span>{% endif %}
+                </span>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </details>
+    {% endfor %}
+  {% endif %}
+{% endblock %}

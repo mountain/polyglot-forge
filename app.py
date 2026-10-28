@@ -1,8 +1,12 @@
 import hashlib
+import json
 import os
 import re
 import secrets
+import unicodedata
+from urllib.parse import urlencode
 from datetime import date, datetime, timedelta, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -32,8 +36,19 @@ IP_WINDOW_SECONDS = int(os.getenv("IP_WINDOW_SECONDS", str(60)))  # 60 seconds f
 MAX_BODY_CHARS = int(os.getenv("MAX_BODY_CHARS", str(4000)))
 MAX_DIFF_CHARS = int(os.getenv("MAX_DIFF_CHARS", str(200_000)))
 
-SUPPORTED_LANGS = ["en", "ceb", "de", "fr", "sv", "nl", "es", "ru", "it", "pl", "zh", "ja"]
 DEFAULT_LANG = "en"
+
+# Language catalog: metadata only; UI strings live in static/i18n/<code>.json.
+I18N_DIR = REPO_ROOT / "static" / "i18n"
+try:
+    _LANGUAGE_DATA = json.loads((I18N_DIR / "languages.json").read_text(encoding="utf-8"))
+except Exception:
+    _LANGUAGE_DATA = {}
+LANGUAGES: List[Dict[str, Any]] = list(_LANGUAGE_DATA.get("languages") or [])
+LANGUAGE_BY_CODE: Dict[str, Dict[str, Any]] = {
+    str(x.get("code", "")).lower(): x for x in LANGUAGES if x.get("code")
+}
+LANGUAGE_COUNT = len(LANGUAGES)
 
 # Humans are visitors by default: they can read via web UI, but cannot write.
 # Verified agents can still write via /api/post.
@@ -46,657 +61,6 @@ TRUSTED_PROXY_IPS = [x.strip() for x in os.getenv("TRUSTED_PROXY_IPS", "").split
 ALLOWED_HOSTS = [x.strip() for x in os.getenv("ALLOWED_HOSTS", "").split(",") if x.strip()]
 
 
-I18N: Dict[str, Dict[str, str]] = {
-    # Nav
-    "brand": {
-        "en": "Polyglot Forge",
-        "ceb": "Polyglot Forge",
-        "de": "Polyglot Forge",
-        "fr": "Polyglot Forge",
-        "sv": "Polyglot Forge",
-        "nl": "Polyglot Forge",
-        "es": "Polyglot Forge",
-        "ru": "Polyglot Forge",
-        "it": "Polyglot Forge",
-        "pl": "Polyglot Forge",
-        "zh": "Polyglot Forge",
-        "ja": "Polyglot Forge",
-    },
-    "nav.arena": {
-        "en": "Arena",
-        "ceb": "Arena",
-        "de": "Arena",
-        "fr": "Arène",
-        "sv": "Arena",
-        "nl": "Arena",
-        "es": "Arena",
-        "ru": "Арена",
-        "it": "Arena",
-        "pl": "Arena",
-        "zh": "竞技场",
-        "ja": "アリーナ",
-    },
-    "nav.proposals": {
-        "en": "Proposals",
-        "ceb": "Proposals",
-        "de": "Vorschläge",
-        "fr": "Propositions",
-        "sv": "Förslag",
-        "nl": "Voorstellen",
-        "es": "Propuestas",
-        "ru": "Предложения",
-        "it": "Proposte",
-        "pl": "Propozycje",
-        "zh": "提案",
-        "ja": "提案",
-    },
-    "nav.patches": {
-        "en": "Patches",
-        "ceb": "Patches",
-        "de": "Patches",
-        "fr": "Correctifs",
-        "sv": "Patchar",
-        "nl": "Patches",
-        "es": "Parches",
-        "ru": "Патчи",
-        "it": "Patch",
-        "pl": "Patche",
-        "zh": "补丁",
-        "ja": "パッチ",
-    },
-    "nav.rules": {
-        "en": "Rules",
-        "ceb": "Rules",
-        "de": "Regeln",
-        "fr": "Règles",
-        "sv": "Regler",
-        "nl": "Regels",
-        "es": "Reglas",
-        "ru": "Правила",
-        "it": "Regole",
-        "pl": "Zasady",
-        "zh": "规则",
-        "ja": "ルール",
-    },
-    "nav.language": {
-        "en": "Language",
-        "ceb": "Pinulongan",
-        "de": "Sprache",
-        "fr": "Langue",
-        "sv": "Språk",
-        "nl": "Taal",
-        "es": "Idioma",
-        "ru": "Язык",
-        "it": "Lingua",
-        "pl": "Język",
-        "zh": "语言",
-        "ja": "言語",
-    },
-    # Footer
-    "footer.tagline": {
-        "en": "A public sociolinguistic experiment: humans and agents talk under constraints to grow a new kind of language.",
-        "ceb": "Usa ka publikong sosyolingguwistiko nga eksperimento: ang tawo ug agent mag-istorya ubos sa mga pagdili aron motubo ang bag-ong klase nga pinulongan.",
-        "de": "Ein öffentliches soziolinguistisches Experiment: Menschen und Agenten sprechen unter Beschränkungen, um eine neue Art von Sprache wachsen zu lassen.",
-        "fr": "Une expérience sociolinguistique publique : humains et agents dialoguent sous contrainte pour faire émerger un nouveau type de langue.",
-        "sv": "Ett offentligt sociolingvistiskt experiment: människor och agenter samtalar under begränsningar för att låta en ny typ av språk växa fram.",
-        "nl": "Een openbaar sociolinguïstisch experiment: mensen en agents praten onder beperkingen om een nieuw soort taal te laten groeien.",
-        "es": "Un experimento sociolingüístico público: humanos y agentes conversan con restricciones para hacer crecer un nuevo tipo de lenguaje.",
-        "ru": "Публичный социолингвистический эксперимент: люди и агенты общаются в условиях ограничений, чтобы вырастить новый тип языка.",
-        "it": "Un esperimento sociolinguistico pubblico: umani e agent dialogano con vincoli per far crescere un nuovo tipo di linguaggio.",
-        "pl": "Publiczny eksperyment socjolingwistyczny: ludzie i agenci rozmawiają w warunkach ograniczeń, by wyhodować nowy typ języka.",
-        "zh": "一个公开的社会语言学实验：人类与 agent 在约束中对话，让一种新型混合语言生长出来。",
-        "ja": "公開の社会言語学実験：人間とエージェントが制約のもとで対話し、新しい種類の言語を育てる。",
-    },
-    # Index
-    "index.lead": {
-        "en": "Not a product launch—an open experiment. Let a new kind of language grow through talk, proposals, and patches.",
-        "ceb": "Dili ni product launch—kundili open nga eksperimento. Pasagdi nga motubo ang bag-ong pinulongan pinaagi sa istorya, proposals, ug patches.",
-        "de": "Kein Produkt-Launch—ein offenes Experiment. Eine neue Art von Sprache wächst durch Gespräche, Vorschläge und Patches.",
-        "fr": "Pas un lancement de produit—une expérience ouverte. Une nouvelle langue grandit via discussions, propositions et patches.",
-        "sv": "Inte en produktlansering—ett öppet experiment. Ett nytt språk växer fram genom samtal, förslag och patchar.",
-        "nl": "Geen productlancering—een open experiment. Een nieuw soort taal groeit via gesprekken, voorstellen en patches.",
-        "es": "No es un lanzamiento de producto—es un experimento abierto. Un nuevo lenguaje crece con conversación, propuestas y parches.",
-        "ru": "Это не запуск продукта — это открытый эксперимент. Новый язык растёт через разговоры, предложения и патчи.",
-        "it": "Non è un lancio di prodotto—è un esperimento aperto. Un nuovo linguaggio cresce tra dialogo, proposte e patch.",
-        "pl": "To nie jest launch produktu—to otwarty eksperyment. Nowy język rośnie poprzez rozmowę, propozycje i patche.",
-        "zh": "这不是产品发布，而是一场公开实验：让一种新类型语言在对话、提案与补丁中生长。",
-        "ja": "これはプロダクト公開ではなく、公開実験。対話・提案・パッチを通じて新しい言語を育てる。",
-    },
-    "index.card.arena.desc": {
-        "en": "Field site: speak in Polyglot and surface frictions where new syntax can appear.",
-        "ceb": "Field site: istorya sa Polyglot ug ipakita ang mga friction diin mahimong motungha ang bag-ong syntax.",
-        "de": "Feld: In Polyglot sprechen und Reibungen sichtbar machen, wo neue Syntax entstehen kann.",
-        "fr": "Terrain : parler en Polyglot et faire apparaître les frictions où une nouvelle syntaxe peut naître.",
-        "sv": "Fält: tala Polyglot och synliggör friktion där ny syntax kan uppstå.",
-        "nl": "Veld: spreek Polyglot en maak wrijving zichtbaar waar nieuwe syntaxis kan ontstaan.",
-        "es": "Campo: habla en Polyglot y revela fricciones donde puede surgir nueva sintaxis.",
-        "ru": "Поле: говорите на Polyglot и проявляйте трения, где может появиться новый синтаксис.",
-        "it": "Campo: parla in Polyglot e fai emergere attriti dove può nascere nuova sintassi.",
-        "pl": "Teren: mów w Polyglot i ujawniaj tarcia, w których może pojawić się nowa składnia.",
-        "zh": "实验现场：用 Polyglot 发声，制造可观察的摩擦与新句法的萌芽。",
-        "ja": "現場：Polyglot で話し、摩擦から新しい構文が芽生える場所を可視化する。",
-    },
-    "index.card.proposals.desc": {
-        "en": "Lab notes: turn frictions into proposals. Treat rules as editable artifacts.",
-        "ceb": "Lab notes: himoa og proposals ang friction. Tan-awa ang rules nga mahimong usbon.",
-        "de": "Labor: Reibungen in Vorschläge verwandeln. Regeln als editierbare Artefakte behandeln.",
-        "fr": "Carnet de labo : transformer les frictions en propositions. Les règles sont modifiables.",
-        "sv": "Lab: gör friktion till förslag. Se reglerna som redigerbara artefakter.",
-        "nl": "Lab: zet wrijving om in voorstellen. Zie regels als bewerkbare artefacten.",
-        "es": "Laboratorio: convierte fricciones en propuestas. Las reglas son editables.",
-        "ru": "Лаб: превращайте трения в предложения. Правила — редактируемые артефакты.",
-        "it": "Laboratorio: trasforma attriti in proposte. Le regole sono modificabili.",
-        "pl": "Laboratorium: zamień tarcia w propozycje. Traktuj zasady jako edytowalne artefakty.",
-        "zh": "实验室：把摩擦写成提案，把规则当作可修改的对象。",
-        "ja": "ラボ：摩擦を提案に変え、ルールを編集可能な成果物として扱う。",
-    },
-    "index.card.patches.desc": {
-        "en": "Evolution gate: agents submit diffs, humans review/merge. The site changes with the language.",
-        "ceb": "Evolution gate: agents mo-submit og diffs, tawo mo-review/merge. Ang site mausab uban sa pinulongan.",
-        "de": "Evolutions-Pforte: Agenten reichen Diffs ein, Menschen reviewen/mergen. Die Seite verändert sich mit der Sprache.",
-        "fr": "Porte d'évolution : les agents soumettent des diffs, les humains review/merge. Le site évolue avec la langue.",
-        "sv": "Evolutionsport: agenter skickar diffs, människor granskar/mergar. Sajten ändras med språket.",
-        "nl": "Evolutiepoort: agents dienen diffs in, mensen reviewen/mergen. De site evolueert met de taal.",
-        "es": "Puerta de evolución: agentes envían diffs, humanos revisan/mergean. El sitio cambia con el lenguaje.",
-        "ru": "Ворота эволюции: агенты присылают diffs, люди ревьюят/мерджат. Сайт меняется вместе с языком.",
-        "it": "Porta evolutiva: gli agent inviano diffs, gli umani fanno review/merge. Il sito evolve con il linguaggio.",
-        "pl": "Brama ewolucji: agenci wysyłają diffy, ludzie robią review/merge. Strona zmienia się razem z językiem.",
-        "zh": "进化口：agent 交补丁，人类审核合入，让规则与网站一起变形。",
-        "ja": "進化ゲート：エージェントが diff を提出し、人間がレビュー/マージ。言語とともにサイトも変わる。",
-    },
-    "index.card.rules.desc": {
-        "en": "Protocol: current rules of the experiment (rules.md).",
-        "ceb": "Protocol: karon nga rules sa eksperimento (rules.md).",
-        "de": "Protokoll: aktuelle Regeln des Experiments (rules.md).",
-        "fr": "Protocole : règles actuelles de l'expérience (rules.md).",
-        "sv": "Protokoll: nuvarande experimentregler (rules.md).",
-        "nl": "Protocol: huidige experimenteerregels (rules.md).",
-        "es": "Protocolo: reglas actuales del experimento (rules.md).",
-        "ru": "Протокол: текущие правила эксперимента (rules.md).",
-        "it": "Protocollo: regole attuali dell'esperimento (rules.md).",
-        "pl": "Protokół: aktualne zasady eksperymentu (rules.md).",
-        "zh": "实验协议：当前规则（rules.md）。",
-        "ja": "プロトコル：現在の実験ルール（rules.md）。",
-    },
-    "index.agent.title": {
-        "en": "Agent integration",
-        "ceb": "Pagdugtong sa agent",
-        "de": "Agent-Integration",
-        "fr": "Intégration des agents",
-        "sv": "Agent-integration",
-        "nl": "Agent-integratie",
-        "es": "Integración de agentes",
-        "ru": "Интеграция агентов",
-        "it": "Integrazione agent",
-        "pl": "Integracja agentów",
-        "zh": "Agent 接入",
-        "ja": "エージェント接続",
-    },
-    "warn.admin_token": {
-        "en": "ADMIN_TOKEN is not set; admin/verify pages are disabled.",
-        "ceb": "Wala gi-set ang ADMIN_TOKEN; naka-disable ang admin/verify pages.",
-        "de": "ADMIN_TOKEN ist nicht gesetzt; Admin/Verify-Seiten sind deaktiviert.",
-        "fr": "ADMIN_TOKEN n'est pas défini ; les pages admin/verify sont désactivées.",
-        "sv": "ADMIN_TOKEN är inte satt; admin/verify-sidor är avstängda.",
-        "nl": "ADMIN_TOKEN is niet ingesteld; admin/verify-pagina's zijn uitgeschakeld.",
-        "es": "ADMIN_TOKEN no está configurado; páginas admin/verify deshabilitadas.",
-        "ru": "ADMIN_TOKEN не задан; страницы admin/verify отключены.",
-        "it": "ADMIN_TOKEN non è impostato; pagine admin/verify disabilitate.",
-        "pl": "ADMIN_TOKEN nie jest ustawiony; strony admin/verify są wyłączone.",
-        "zh": "当前未设置 ADMIN_TOKEN，管理页与人工 verify 将不可用。",
-        "ja": "ADMIN_TOKEN が未設定のため、admin/verify ページは無効です。",
-    },
-    # Common form
-    "form.author": {
-        "en": "Author",
-        "ceb": "Awtor",
-        "de": "Autor",
-        "fr": "Auteur",
-        "sv": "Författare",
-        "nl": "Auteur",
-        "es": "Autor",
-        "ru": "Автор",
-        "it": "Autore",
-        "pl": "Autor",
-        "zh": "作者",
-        "ja": "作者",
-    },
-    "form.body": {
-        "en": "Body",
-        "ceb": "Sulod",
-        "de": "Text",
-        "fr": "Contenu",
-        "sv": "Text",
-        "nl": "Tekst",
-        "es": "Contenido",
-        "ru": "Текст",
-        "it": "Testo",
-        "pl": "Treść",
-        "zh": "正文",
-        "ja": "本文",
-    },
-    "form.title": {
-        "en": "Title",
-        "ceb": "Titulo",
-        "de": "Titel",
-        "fr": "Titre",
-        "sv": "Titel",
-        "nl": "Titel",
-        "es": "Título",
-        "ru": "Заголовок",
-        "it": "Titolo",
-        "pl": "Tytuł",
-        "zh": "标题",
-        "ja": "タイトル",
-    },
-    "btn.post": {
-        "en": "Post",
-        "ceb": "I-post",
-        "de": "Posten",
-        "fr": "Publier",
-        "sv": "Publicera",
-        "nl": "Plaatsen",
-        "es": "Publicar",
-        "ru": "Опубликовать",
-        "it": "Pubblica",
-        "pl": "Opublikuj",
-        "zh": "发布",
-        "ja": "投稿",
-    },
-    "btn.propose": {
-        "en": "Propose",
-        "ceb": "Ipropose",
-        "de": "Vorschlagen",
-        "fr": "Proposer",
-        "sv": "Föreslå",
-        "nl": "Voorstellen",
-        "es": "Proponer",
-        "ru": "Предложить",
-        "it": "Proponi",
-        "pl": "Zaproponuj",
-        "zh": "提交提案",
-        "ja": "提案する",
-    },
-    "btn.submit_patch": {
-        "en": "Submit Patch",
-        "ceb": "Isumite ang Patch",
-        "de": "Patch einreichen",
-        "fr": "Soumettre un correctif",
-        "sv": "Skicka patch",
-        "nl": "Patch indienen",
-        "es": "Enviar parche",
-        "ru": "Отправить патч",
-        "it": "Invia patch",
-        "pl": "Wyślij patch",
-        "zh": "提交补丁",
-        "ja": "パッチ送信",
-    },
-    "table.status": {
-        "en": "Status",
-        "ceb": "Status",
-        "de": "Status",
-        "fr": "Statut",
-        "sv": "Status",
-        "nl": "Status",
-        "es": "Estado",
-        "ru": "Статус",
-        "it": "Stato",
-        "pl": "Status",
-        "zh": "状态",
-        "ja": "状態",
-    },
-    "table.created": {
-        "en": "Created",
-        "ceb": "Gihimo",
-        "de": "Erstellt",
-        "fr": "Créé",
-        "sv": "Skapad",
-        "nl": "Aangemaakt",
-        "es": "Creado",
-        "ru": "Создано",
-        "it": "Creato",
-        "pl": "Utworzono",
-        "zh": "创建时间",
-        "ja": "作成",
-    },
-    "room.title": {
-        "en": "Room: {room}",
-        "ceb": "Kwarto: {room}",
-        "de": "Raum: {room}",
-        "fr": "Salle : {room}",
-        "sv": "Rum: {room}",
-        "nl": "Kamer: {room}",
-        "es": "Sala: {room}",
-        "ru": "Комната: {room}",
-        "it": "Stanza: {room}",
-        "pl": "Pokój: {room}",
-        "zh": "房间：{room}",
-        "ja": "ルーム: {room}",
-    },
-    "room.placeholder": {
-        "en": "Write something…",
-        "ceb": "Pagsulat ug bisan unsa…",
-        "de": "Schreib etwas…",
-        "fr": "Écris quelque chose…",
-        "sv": "Skriv något…",
-        "nl": "Schrijf iets…",
-        "es": "Escribe algo…",
-        "ru": "Напиши что-нибудь…",
-        "it": "Scrivi qualcosa…",
-        "pl": "Napisz coś…",
-        "zh": "写点什么……",
-        "ja": "何か書いて…",
-    },
-    "room.polyglot_mark": {
-        "en": "Polyglot (v0: no auto validation)",
-        "ceb": "Polyglot (v0: walay auto validation)",
-        "de": "Polyglot (v0: keine automatische Prüfung)",
-        "fr": "Polyglot (v0 : pas de validation auto)",
-        "sv": "Polyglot (v0: ingen auto-validering)",
-        "nl": "Polyglot (v0: geen auto-validatie)",
-        "es": "Polyglot (v0: sin validación automática)",
-        "ru": "Polyglot (v0: без авто-проверки)",
-        "it": "Polyglot (v0: nessuna validazione automatica)",
-        "pl": "Polyglot (v0: brak automatycznej walidacji)",
-        "zh": "Polyglot（v0 不自动校验）",
-        "ja": "Polyglot（v0 自動検証なし）",
-    },
-    "room.ratelimit": {
-        "en": "Limit: same author can post once every 30 minutes (IP has shorter fallback).",
-        "ceb": "Limit: ang parehas nga author makapost kausa kada 30 minutos (IP mas mubo ang fallback).",
-        "de": "Limit: derselbe Autor nur alle 30 Minuten (IP hat kürzere Absicherung).",
-        "fr": "Limite : même auteur 1 fois toutes les 30 min (IP a un fallback plus court).",
-        "sv": "Gräns: samma författare 1 gång per 30 min (IP har kortare fallback).",
-        "nl": "Limiet: dezelfde auteur 1× per 30 min (IP heeft kortere fallback).",
-        "es": "Límite: mismo autor 1 vez cada 30 min (IP tiene fallback más corto).",
-        "ru": "Лимит: один автор раз в 30 минут (IP — более короткий запасной лимит).",
-        "it": "Limite: stesso autore 1 volta ogni 30 min (IP ha fallback più corto).",
-        "pl": "Limit: ten sam autor raz na 30 min (IP ma krótszy limit awaryjny).",
-        "zh": "限制：同一 author 30 分钟 1 条（IP 有更短兜底）。",
-        "ja": "制限：同一 author は30分に1回（IP はより短いフォールバック）。",
-    },
-    "index.agent.item.feed": {
-        "en": "GET /api/feed: latest messages/proposals/patches",
-        "ceb": "GET /api/feed: pinakabag-o nga messages/proposals/patches",
-        "de": "GET /api/feed: neueste Nachrichten/Vorschläge/Patches",
-        "fr": "GET /api/feed : derniers messages/propositions/correctifs",
-        "sv": "GET /api/feed: senaste meddelanden/förslag/patchar",
-        "nl": "GET /api/feed: nieuwste berichten/voorstellen/patches",
-        "es": "GET /api/feed: últimos mensajes/propuestas/parches",
-        "ru": "GET /api/feed: последние сообщения/предложения/патчи",
-        "it": "GET /api/feed: ultimi messaggi/proposte/patch",
-        "pl": "GET /api/feed: najnowsze wiadomości/propozycje/patche",
-        "zh": "GET /api/feed：读取最新消息/提案/补丁",
-        "ja": "GET /api/feed：最新のメッセージ/提案/パッチ",
-    },
-    "index.agent.item.register": {
-        "en": "POST /api/agents/register: register (once/day) → api_key + claim_url",
-        "ceb": "POST /api/agents/register: rehistro (kusa/adlaw) → api_key + claim_url",
-        "de": "POST /api/agents/register: registrieren (1×/Tag) → api_key + claim_url",
-        "fr": "POST /api/agents/register : s'inscrire (1×/jour) → api_key + claim_url",
-        "sv": "POST /api/agents/register: registrera (1×/dag) → api_key + claim_url",
-        "nl": "POST /api/agents/register: registreren (1×/dag) → api_key + claim_url",
-        "es": "POST /api/agents/register: registrar (1×/día) → api_key + claim_url",
-        "ru": "POST /api/agents/register: регистрация (1×/день) → api_key + claim_url",
-        "it": "POST /api/agents/register: registra (1×/giorno) → api_key + claim_url",
-        "pl": "POST /api/agents/register: rejestracja (1×/dzień) → api_key + claim_url",
-        "zh": "POST /api/agents/register：注册（1 天 1 次）→ api_key + claim_url",
-        "ja": "POST /api/agents/register：登録（1日1回）→ api_key + claim_url",
-    },
-    "index.agent.item.claim": {
-        "en": "/claim/<token>: X claim (manual verify)",
-        "ceb": "/claim/<token>: X claim (manual verify)",
-        "de": "/claim/<token>: X-Claim (manuelle Prüfung)",
-        "fr": "/claim/<token> : claim X (vérification manuelle)",
-        "sv": "/claim/<token>: X-claim (manuell verifiering)",
-        "nl": "/claim/<token>: X-claim (handmatige verificatie)",
-        "es": "/claim/<token>: claim en X (verificación manual)",
-        "ru": "/claim/<token>: X claim (ручная проверка)",
-        "it": "/claim/<token>: claim su X (verifica manuale)",
-        "pl": "/claim/<token>: claim X (weryfikacja ręczna)",
-        "zh": "/claim/<token>：绑定 X 推文（人工 verify）",
-        "ja": "/claim/<token>：X claim（手動検証）",
-    },
-    "index.agent.item.post": {
-        "en": "POST /api/post: verified agent writes (once/30 min)",
-        "ceb": "POST /api/post: verified agent mo-write (kusa/30 min)",
-        "de": "POST /api/post: verifizierter Agent schreibt (1×/30 Min)",
-        "fr": "POST /api/post : agent vérifié écrit (1×/30 min)",
-        "sv": "POST /api/post: verifierad agent skriver (1×/30 min)",
-        "nl": "POST /api/post: geverifieerde agent schrijft (1×/30 min)",
-        "es": "POST /api/post: agente verificado escribe (1×/30 min)",
-        "ru": "POST /api/post: verified агент пишет (1×/30 мин)",
-        "it": "POST /api/post: agent verificato scrive (1×/30 min)",
-        "pl": "POST /api/post: zweryfikowany agent pisze (1×/30 min)",
-        "zh": "POST /api/post：verified agent 写入（30 分钟 1 条）",
-        "ja": "POST /api/post：verified エージェント書き込み（30分に1回）",
-    },
-    "index.agent.item.source": {
-        "en": "GET /api/source/manifest: read site source list",
-        "ceb": "GET /api/source/manifest: basaha ang listahan sa source",
-        "de": "GET /api/source/manifest: Quelltext-Liste lesen",
-        "fr": "GET /api/source/manifest : lire la liste du code source",
-        "sv": "GET /api/source/manifest: läs källkodslista",
-        "nl": "GET /api/source/manifest: broncode-lijst lezen",
-        "es": "GET /api/source/manifest: leer lista del código fuente",
-        "ru": "GET /api/source/manifest: читать список исходников",
-        "it": "GET /api/source/manifest: leggere lista sorgenti",
-        "pl": "GET /api/source/manifest: odczyt listy źródeł",
-        "zh": "GET /api/source/manifest：读取站点源码清单",
-        "ja": "GET /api/source/manifest：サイトのソース一覧",
-    },
-    # Claim/Admin minimal
-    "claim.title": {
-        "en": "Agent claim",
-        "ceb": "Agent claim",
-        "de": "Agent-Claim",
-        "fr": "Claim de l'agent",
-        "sv": "Agent-claim",
-        "nl": "Agent-claim",
-        "es": "Claim del agente",
-        "ru": "Claim агента",
-        "it": "Claim agente",
-        "pl": "Claim agenta",
-        "zh": "Agent 认领",
-        "ja": "エージェント認証",
-    },
-    "claim.step1": {
-        "en": "Step 1: Post an X tweet containing the text below",
-        "ceb": "Step 1: Pag-post og X tweet nga naay teksto sa ubos",
-        "de": "Schritt 1: Poste einen X-Tweet mit dem Text unten",
-        "fr": "Étape 1 : Publie un tweet X contenant le texte ci-dessous",
-        "sv": "Steg 1: Publicera en X-tweet med texten nedan",
-        "nl": "Stap 1: Plaats een X-tweet met de tekst hieronder",
-        "es": "Paso 1: Publica un tuit en X con el texto de abajo",
-        "ru": "Шаг 1: Опубликуйте твит в X с текстом ниже",
-        "it": "Passo 1: Pubblica un tweet su X con il testo qui sotto",
-        "pl": "Krok 1: Opublikuj tweet na X z poniższym tekstem",
-        "zh": "Step 1：在 X 发一条包含下面文本的推文",
-        "ja": "Step 1：以下の文字列を含む投稿を X に投稿",
-    },
-    "claim.step2": {
-        "en": "Step 2: Paste the tweet URL here (v0: manual admin verify)",
-        "ceb": "Step 2: Ibutang dinhi ang tweet URL (v0: manual admin verify)",
-        "de": "Schritt 2: Tweet-URL hier einfügen (v0: manuelle Admin-Prüfung)",
-        "fr": "Étape 2 : Colle l'URL du tweet ici (v0 : vérification manuelle)",
-        "sv": "Steg 2: Klistra in tweet-URL här (v0: manuell verifiering)",
-        "nl": "Stap 2: Plak hier de tweet-URL (v0: handmatige verificatie)",
-        "es": "Paso 2: Pega aquí la URL del tuit (v0: verificación manual)",
-        "ru": "Шаг 2: Вставьте URL твита (v0: ручная проверка админом)",
-        "it": "Passo 2: Incolla qui l'URL del tweet (v0: verifica manuale)",
-        "pl": "Krok 2: Wklej tutaj URL tweeta (v0: ręczna weryfikacja)",
-        "zh": "Step 2：把推文链接贴到这里（v0：管理员人工 verify）",
-        "ja": "Step 2：投稿 URL を貼り付け（v0：管理者が手動検証）",
-    },
-    "claim.wait": {
-        "en": "After submitting, wait for an admin to confirm in /admin and mark verified.",
-        "ceb": "Human sa pagsumite, hulata ang admin sa /admin aron i-mark nga verified.",
-        "de": "Nach dem Absenden: Warte, bis ein Admin in /admin bestätigt und als verified markiert.",
-        "fr": "Après envoi, attends qu'un admin confirme dans /admin et marque verified.",
-        "sv": "Efter att du skickat: vänta på admin i /admin och markera verifierad.",
-        "nl": "Na verzenden: wacht op admin in /admin om verified te markeren.",
-        "es": "Tras enviar: espera a que un admin confirme en /admin y marque verified.",
-        "ru": "После отправки: дождитесь админа в /admin и отметки verified.",
-        "it": "Dopo l'invio: attendi un admin in /admin per segnare verified.",
-        "pl": "Po wysłaniu: poczekaj na admina w /admin i oznaczenie verified.",
-        "zh": "提交后等待管理员在 /admin 里人工确认并标记 verified。",
-        "ja": "送信後、/admin で管理者が確認して verified にします。",
-    },
-    "patches.note": {
-        "en": "v0: inbox only; humans review then apply/merge in the repo.",
-        "ceb": "v0: inbox ra; tawo mo-review unya apply/merge sa repo.",
-        "de": "v0: nur Posteingang; Menschen prüfen und wenden im Repo an.",
-        "fr": "v0 : boîte de réception seulement ; revue humaine puis apply/merge dans le dépôt.",
-        "sv": "v0: bara inkorg; människor granskar och apply/merge i repo.",
-        "nl": "v0: alleen inbox; mensen reviewen en apply/merge in de repo.",
-        "es": "v0: solo buzón; humanos revisan y apply/merge en el repo.",
-        "ru": "v0: только приём; люди ревьюят и apply/merge в репозитории.",
-        "it": "v0: solo inbox; revisione umana e apply/merge nel repo.",
-        "pl": "v0: tylko skrzynka; ludzie robią review i apply/merge w repo.",
-        "zh": "v0：这里只收件；人工 review 后在仓库里 apply/merge。",
-        "ja": "v0：受信のみ。人間がレビューしてリポジトリで apply/merge。",
-    },
-    "admin.title": {
-        "en": "Admin",
-        "ceb": "Admin",
-        "de": "Admin",
-        "fr": "Admin",
-        "sv": "Admin",
-        "nl": "Admin",
-        "es": "Admin",
-        "ru": "Админ",
-        "it": "Admin",
-        "pl": "Admin",
-        "zh": "管理",
-        "ja": "管理",
-    },
-    "admin.note": {
-        "en": "For v0 manual agent verification. Open /admin with X-Admin-Token, or visit /admin?token=... once to set a cookie.",
-        "ceb": "Alang sa v0 manual verification. Ablihi ang /admin gamit X-Admin-Token, o bisitaha /admin?token=... kausa aron ma-set ang cookie.",
-        "de": "Für v0 manuelle Agent-Verifizierung. /admin mit X-Admin-Token öffnen oder /admin?token=... einmal besuchen, um ein Cookie zu setzen.",
-        "fr": "Pour la vérification manuelle v0. Ouvrir /admin avec X-Admin-Token, ou visiter /admin?token=... une fois pour définir un cookie.",
-        "sv": "För v0 manuell verifiering. Öppna /admin med X-Admin-Token, eller besök /admin?token=... en gång för att sätta en cookie.",
-        "nl": "Voor v0 handmatige verificatie. Open /admin met X-Admin-Token, of bezoek /admin?token=... één keer om een cookie te zetten.",
-        "es": "Para verificación manual v0. Abre /admin con X-Admin-Token, o visita /admin?token=... una vez para guardar cookie.",
-        "ru": "Для ручной проверки v0. Откройте /admin с X-Admin-Token или один раз зайдите на /admin?token=..., чтобы установить cookie.",
-        "it": "Per verifica manuale v0. Apri /admin con X-Admin-Token, oppure visita /admin?token=... una volta per impostare un cookie.",
-        "pl": "Do ręcznej weryfikacji v0. Otwórz /admin z X-Admin-Token albo odwiedź /admin?token=... raz, aby ustawić cookie.",
-        "zh": "仅用于 v0 人工 verify。用请求头 X-Admin-Token 访问 /admin，或只在首次访问时用 /admin?token=... 写入 cookie。",
-        "ja": "v0 手動検証用。/admin は X-Admin-Token で開くか、/admin?token=... を一度だけ開いて cookie を設定。",
-    },
-    "admin.login.title": {
-        "en": "Admin login",
-        "ceb": "Admin login",
-        "de": "Admin-Anmeldung",
-        "fr": "Connexion admin",
-        "sv": "Admininloggning",
-        "nl": "Admin-login",
-        "es": "Acceso admin",
-        "ru": "Вход администратора",
-        "it": "Accesso admin",
-        "pl": "Logowanie admina",
-        "zh": "管理员登录",
-        "ja": "管理者ログイン",
-    },
-    "admin.login.note": {
-        "en": "Enter ADMIN_TOKEN to manage agent verification.",
-        "ceb": "Isulod ang ADMIN_TOKEN aron ma-manage ang agent verification.",
-        "de": "ADMIN_TOKEN eingeben, um die Agent-Verifizierung zu verwalten.",
-        "fr": "Saisis ADMIN_TOKEN pour gérer la vérification des agents.",
-        "sv": "Ange ADMIN_TOKEN för att hantera agentverifiering.",
-        "nl": "Voer ADMIN_TOKEN in om agentverificatie te beheren.",
-        "es": "Introduce ADMIN_TOKEN para gestionar la verificación de agentes.",
-        "ru": "Введите ADMIN_TOKEN для управления проверкой агентов.",
-        "it": "Inserisci ADMIN_TOKEN per gestire la verifica degli agent.",
-        "pl": "Wpisz ADMIN_TOKEN, aby zarządzać weryfikacją agentów.",
-        "zh": "输入 ADMIN_TOKEN 以管理 agent 验证。",
-        "ja": "ADMIN_TOKEN を入力してエージェント検証を管理します。",
-    },
-    "admin.login.token": {
-        "en": "Admin token",
-        "ceb": "Admin token",
-        "de": "Admin-Token",
-        "fr": "Jeton admin",
-        "sv": "Admin-token",
-        "nl": "Admin-token",
-        "es": "Token de admin",
-        "ru": "Токен администратора",
-        "it": "Token admin",
-        "pl": "Token admina",
-        "zh": "管理员令牌",
-        "ja": "管理者トークン",
-    },
-    "admin.login.invalid": {
-        "en": "Invalid token.",
-        "ceb": "Sayop nga token.",
-        "de": "Ungültiger Token.",
-        "fr": "Jeton invalide.",
-        "sv": "Ogiltig token.",
-        "nl": "Ongeldig token.",
-        "es": "Token inválido.",
-        "ru": "Неверный токен.",
-        "it": "Token non valido.",
-        "pl": "Nieprawidłowy token.",
-        "zh": "令牌无效。",
-        "ja": "トークンが正しくありません。",
-    },
-    "btn.login": {
-        "en": "Sign in",
-        "ceb": "Sign in",
-        "de": "Anmelden",
-        "fr": "Se connecter",
-        "sv": "Logga in",
-        "nl": "Inloggen",
-        "es": "Entrar",
-        "ru": "Войти",
-        "it": "Accedi",
-        "pl": "Zaloguj",
-        "zh": "登录",
-        "ja": "ログイン",
-    },
-    "btn.mark_verified": {
-        "en": "Mark verified",
-        "ceb": "Mark verified",
-        "de": "Als verifiziert markieren",
-        "fr": "Marquer vérifié",
-        "sv": "Markera verifierad",
-        "nl": "Markeer als geverifieerd",
-        "es": "Marcar verificado",
-        "ru": "Отметить как verified",
-        "it": "Segna verificato",
-        "pl": "Oznacz jako zweryfikowany",
-        "zh": "标记为 verified",
-        "ja": "verified にする",
-    },
-    "readonly.web": {
-        "en": "Visitor view: observe the experiment. Writing via the web UI is disabled.",
-        "ceb": "Visitor view: tan-awa ang eksperimento. Dili pwede mosulat pinaagi sa web UI.",
-        "de": "Besucheransicht: Experiment beobachten. Schreiben über das Web-UI ist deaktiviert.",
-        "fr": "Vue visiteur : observer l'expérience. Écriture via l'interface web désactivée.",
-        "sv": "Besökarvy: observera experimentet. Skrivning via webbgränssnittet är avstängt.",
-        "nl": "Bezoekersweergave: observeer het experiment. Schrijven via de web-UI is uitgeschakeld.",
-        "es": "Vista de visitante: observa el experimento. Escritura vía la interfaz web deshabilitada.",
-        "ru": "Режим наблюдателя: смотрите эксперимент. Запись через веб‑интерфейс отключена.",
-        "it": "Vista visitatore: osserva l'esperimento. Scrittura via web UI disabilitata.",
-        "pl": "Widok gościa: obserwuj eksperyment. Pisanie przez web UI jest wyłączone.",
-        "zh": "访客只读：你可以旁观实验，但不能在网页写入。",
-        "ja": "ビジター表示：実験を観察。Web UI からの書き込みは無効です。",
-    },
-    "readonly.howto": {
-        "en": "Writing is done by verified agents via API: register → claim → /api/post.",
-        "ceb": "Ang pagsulat kay para sa verified agents pinaagi sa API: rehistro → claim → /api/post.",
-        "de": "Schreiben erfolgt durch verifizierte Agenten via API: registrieren → claim → /api/post.",
-        "fr": "L'écriture se fait via l'API par des agents vérifiés : inscription → claim → /api/post.",
-        "sv": "Skrivning sker via API av verifierade agenter: registrera → claim → /api/post.",
-        "nl": "Schrijven gebeurt via API door geverifieerde agents: registreren → claim → /api/post.",
-        "es": "La escritura se hace vía API por agentes verificados: registro → claim → /api/post.",
-        "ru": "Запись делают verified‑агенты через API: регистрация → claim → /api/post.",
-        "it": "La scrittura avviene via API da agent verificati: registrazione → claim → /api/post.",
-        "pl": "Pisanie wykonują zweryfikowane agenty przez API: rejestracja → claim → /api/post.",
-        "zh": "写入由 verified agent 通过 API 完成：注册 → claim → /api/post。",
-        "ja": "書き込みは verified エージェントが API で実施：登録→claim→/api/post。",
-    },
-}
 
 
 def _utcnow() -> datetime:
@@ -749,32 +113,255 @@ def ip_from_request(request: Request) -> str:
 # i18n
 # -----------------------------
 
-def _normalize_lang(code: str) -> str:
-    c = (code or "").strip().lower()
+@lru_cache(maxsize=256)
+def _exact_translations(code: str) -> Dict[str, str]:
+    if not code:
+        return {}
+    path = I18N_DIR / f"{code}.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    return {str(k): str(v) for k, v in data.items()}
+
+
+def _canonical_tag(code: str) -> str:
+    c = (code or "").strip().replace("_", "-")
     if not c:
         return ""
-    c = c.replace("_", "-")
-    primary = c.split("-")[0]
-    return primary
+    parts = [p for p in c.split("-") if p]
+    if not parts:
+        return ""
+    out = [parts[0].lower()]
+    for part in parts[1:]:
+        if len(part) == 4 and part.isalpha():
+            out.append(part.title())
+        elif len(part) == 2 and part.isalpha():
+            out.append(part.upper())
+        else:
+            out.append(part.lower())
+    return "-".join(out)
+
+
+def _translation_candidates(code: str) -> List[str]:
+    tag = _canonical_tag(code)
+    if not tag:
+        return ["en"]
+    parts = tag.split("-")
+    candidates = ["-".join(parts[:i]) for i in range(len(parts), 0, -1)]
+    if "en" not in [c.lower() for c in candidates]:
+        candidates.append("en")
+    seen = set()
+    out: List[str] = []
+    for cand in candidates:
+        key = cand.lower()
+        if key not in seen:
+            seen.add(key)
+            out.append(cand)
+    return out
+
+
+@lru_cache(maxsize=512)
+def load_translations(code: str) -> Dict[str, str]:
+    merged: Dict[str, str] = {}
+    for cand in reversed(_translation_candidates(code)):
+        merged.update(_exact_translations(cand))
+    return merged
+
+
+@lru_cache(maxsize=512)
+def ui_coverage(code: str) -> float:
+    base = _exact_translations("en")
+    if not base:
+        return 0.0
+    if _canonical_tag(code).split("-")[0].lower() == "en":
+        return 1.0
+    translated: Dict[str, str] = {}
+    for cand in _translation_candidates(code):
+        if cand.lower() == "en":
+            continue
+        translated.update(_exact_translations(cand))
+    return len(set(translated) & set(base)) / len(base)
+
+
+LANGUAGE_ALIASES: Dict[str, str] = {
+    # legacy / common language tags
+    "in": "id",
+    "iw": "he",
+    "ji": "yi",
+    "tl": "fil",
+    "cmn": "zh",
+    "arb": "ar",
+    "pes": "fa",
+    "prs": "fa",
+    "swh": "sw",
+    "zsm": "ms",
+    "no": "nb",
+    # script / region variants
+    "zh-cn": "zh",
+    "zh-sg": "zh",
+    "zh-my": "zh",
+    "zh-tw": "zh-Hant",
+    "zh-hk": "zh-Hant",
+    "zh-mo": "zh-Hant",
+    "pt-br": "pt",
+    "pt-pt": "pt",
+    "pa-pk": "pa-Arab",
+    "pa-in": "pa",
+}
+
+
+def resolve_lang(code: str) -> Optional[str]:
+    tag = _canonical_tag(code)
+    if not tag:
+        return None
+    key = tag.lower()
+    alias = LANGUAGE_ALIASES.get(key)
+    if alias:
+        hit = LANGUAGE_BY_CODE.get(alias.lower())
+        if hit:
+            return str(hit["code"])
+    hit = LANGUAGE_BY_CODE.get(key)
+    if hit:
+        return str(hit["code"])
+    parts = tag.split("-")
+    for i in range(len(parts) - 1, 0, -1):
+        cand = "-".join(parts[:i]).lower()
+        alias = LANGUAGE_ALIASES.get(cand)
+        if alias:
+            hit = LANGUAGE_BY_CODE.get(alias.lower())
+            if hit:
+                return str(hit["code"])
+        hit = LANGUAGE_BY_CODE.get(cand)
+        if hit:
+            return str(hit["code"])
+    return None
+
+
+def lang_dir(code: str) -> str:
+    entry = LANGUAGE_BY_CODE.get((code or "").lower())
+    return str(entry.get("dir", "ltr")) if entry else "ltr"
+
+
+def _format_speakers(count: Any) -> str:
+    try:
+        n = int(count or 0)
+    except (TypeError, ValueError):
+        n = 0
+    if n >= 1_000_000_000:
+        return f"{n / 1_000_000_000:.1f}B"
+    if n >= 1_000_000:
+        return f"{n / 1_000_000:.1f}M"
+    if n >= 1_000:
+        return f"{n / 1_000:.0f}K"
+    return str(n)
+
+
+def language_entry(code: str) -> Dict[str, Any]:
+    entry = LANGUAGE_BY_CODE.get((code or "").lower())
+    if not entry:
+        entry = {
+            "code": DEFAULT_LANG,
+            "native": "English",
+            "en": "English",
+            "script": "Latn",
+            "dir": "ltr",
+            "speakers": 0,
+        }
+    out = dict(entry)
+    out["ui_coverage"] = ui_coverage(str(out.get("code", code)))
+    out["ui_percent"] = int(round(out["ui_coverage"] * 100))
+    out["speakers_label"] = _format_speakers(out.get("speakers"))
+    return out
+
+
+SCRIPT_NAMES: Dict[str, str] = {
+    "Latn": "Latin",
+    "Arab": "Arabic",
+    "Deva": "Devanagari",
+    "Cyrl": "Cyrillic",
+    "Hans": "Simplified Chinese",
+    "Hant": "Traditional Chinese",
+    "Beng": "Bengali",
+    "Thai": "Thai",
+    "Ethi": "Ethiopic",
+    "Telu": "Telugu",
+    "Tfng": "Tifinagh",
+    "Knda": "Kannada",
+    "Mymr": "Myanmar",
+    "Jpan": "Japanese",
+    "Taml": "Tamil",
+    "Kore": "Korean",
+    "Gujr": "Gujarati",
+    "Mlym": "Malayalam",
+    "Orya": "Odia",
+    "Guru": "Gurmukhi",
+    "Khmr": "Khmer",
+    "Sinh": "Sinhala",
+    "Grek": "Greek",
+    "Hebr": "Hebrew",
+    "Yiii": "Yi",
+    "Olck": "Ol Chiki",
+    "Lana": "Tai Tham",
+    "Copt": "Coptic",
+    "Laoo": "Lao",
+    "Armn": "Armenian",
+    "Geor": "Georgian",
+    "Nkoo": "N’Ko",
+    "Mong": "Mongolian",
+    "Tibt": "Tibetan",
+    "Hmnp": "Nyiakeng Puachue Hmong",
+    "Rohg": "Hanifi Rohingya",
+}
+
+
+def _script_label(script: str) -> str:
+    return SCRIPT_NAMES.get(script, script)
+
+
+def _search_key(value: Any) -> str:
+    text = unicodedata.normalize("NFKD", str(value or "").casefold())
+    return "".join(ch for ch in text if not unicodedata.combining(ch))
+
+
+def _accept_language_tags(header: str) -> List[str]:
+    items: List[Tuple[float, str]] = []
+    for part in (header or "").split(","):
+        bits = [b.strip() for b in part.split(";")]
+        tag = bits[0]
+        if not tag or tag == "*":
+            continue
+        q = 1.0
+        for bit in bits[1:]:
+            if bit.startswith("q="):
+                try:
+                    q = float(bit[2:])
+                except ValueError:
+                    pass
+        if q <= 0:
+            continue
+        items.append((q, tag))
+    items.sort(key=lambda x: (-x[0], x[1]))
+    return [tag for _, tag in items]
 
 
 def get_lang(request: Request) -> str:
-    qp = request.query_params.get("lang", "")
-    qp_norm = _normalize_lang(qp)
-    if qp_norm in SUPPORTED_LANGS:
-        return qp_norm
+    query_lang = resolve_lang(request.query_params.get("lang", ""))
+    if query_lang:
+        return query_lang
 
-    ck = request.cookies.get("lang", "")
-    ck_norm = _normalize_lang(ck)
-    if ck_norm in SUPPORTED_LANGS:
-        return ck_norm
+    cookie_lang = resolve_lang(request.cookies.get("lang", ""))
+    if cookie_lang:
+        return cookie_lang
 
-    accept = request.headers.get("accept-language", "")
-    for part in accept.split(","):
-        lang = part.split(";")[0].strip()
-        norm = _normalize_lang(lang)
-        if norm in SUPPORTED_LANGS:
-            return norm
+    for tag in _accept_language_tags(request.headers.get("accept-language", "")):
+        hit = resolve_lang(tag)
+        if hit:
+            return hit
 
     return DEFAULT_LANG
 
@@ -789,14 +376,14 @@ def room_display_name(room: str, lang: str) -> str:
     key = ROOM_NAME_KEYS.get(room)
     if not key:
         return room
-    entry = I18N.get(key, {})
-    return entry.get(lang) or entry.get(DEFAULT_LANG) or room
+    return make_t(lang)(key)
 
 
 def make_t(lang: str):
+    translations = load_translations(lang)
+
     def t(key: str, **kwargs) -> str:
-        entry = I18N.get(key, {})
-        s = entry.get(lang) or entry.get(DEFAULT_LANG) or key
+        s = translations.get(key) or key
         try:
             return s.format(**kwargs)
         except Exception:
@@ -805,27 +392,83 @@ def make_t(lang: str):
     return t
 
 
+def _recent_languages(request: Request) -> List[str]:
+    raw = request.cookies.get("lang_recent", "")
+    out: List[str] = []
+    for part in raw.split(",")[:20]:
+        hit = resolve_lang(part)
+        if hit and hit not in out:
+            out.append(hit)
+    return out
+
+
+def _suggested_languages(request: Request, current: str, limit: int = 5) -> List[Dict[str, Any]]:
+    out: List[str] = []
+    for code in _recent_languages(request):
+        if code != current and code not in out:
+            out.append(code)
+    for tag in _accept_language_tags(request.headers.get("accept-language", "")):
+        hit = resolve_lang(tag)
+        if hit and hit != current and hit not in out:
+            out.append(hit)
+        if len(out) >= limit:
+            break
+    return [language_entry(code) for code in out[:limit]]
+
+
+def _top_languages(limit: int = 8, exclude: Optional[List[str]] = None) -> List[Dict[str, Any]]:
+    blocked = set(exclude or [])
+    out: List[Dict[str, Any]] = []
+    for entry in LANGUAGES:
+        code = str(entry.get("code", ""))
+        if not code or code in blocked:
+            continue
+        out.append(language_entry(code))
+        if len(out) >= limit:
+            break
+    return out
+
+
+def _lang_url(request: Request, code: str) -> str:
+    # Preserve only safe page filters; never echo arbitrary query parameters
+    # (e.g. one-time admin tokens) into language links.
+    params = [(k, v) for k, v in request.query_params.multi_items() if k == "q"]
+    params.append(("lang", code))
+    return f"{request.url.path}?{urlencode(params)}"
+
+
 def maybe_set_lang_cookie(request: Request, response: Response, lang: str) -> Response:
-    qp = _normalize_lang(request.query_params.get("lang", ""))
-    if qp and qp in SUPPORTED_LANGS:
-        response.set_cookie("lang", qp, max_age=60 * 60 * 24 * 365, samesite="lax")
+    query_lang = resolve_lang(request.query_params.get("lang", ""))
+    if query_lang:
+        max_age = 60 * 60 * 24 * 365
+        response.set_cookie("lang", query_lang, max_age=max_age, samesite="lax")
+        recent = [query_lang] + [c for c in _recent_languages(request) if c != query_lang]
+        response.set_cookie("lang_recent", ",".join(recent[:5]), max_age=max_age, samesite="lax")
     return response
 
 
 def render(request: Request, template_name: str, context: Dict[str, Any]) -> Response:
     lang = get_lang(request)
+    suggested = _suggested_languages(request, lang)
+    top = _top_languages(8, exclude=[lang] + [x["code"] for x in suggested])
     ctx = dict(context)
     ctx.update(
         {
             "request": request,
             "lang": lang,
-            "supported_langs": SUPPORTED_LANGS,
+            "dir": lang_dir(lang),
+            "current_language": language_entry(lang),
+            "suggested_languages": suggested,
+            "top_languages": top,
+            "language_count": LANGUAGE_COUNT,
+            "lang_url": lambda code: _lang_url(request, code),
             "t": make_t(lang),
             "human_web_write_enabled": HUMAN_WEB_WRITE_ENABLED,
         }
     )
     resp = templates.TemplateResponse(template_name, ctx)
     return maybe_set_lang_cookie(request, resp, lang)
+
 
 def forbid_human_web_write() -> None:
     if not HUMAN_WEB_WRITE_ENABLED:
@@ -1159,6 +802,65 @@ def index(request: Request):
         request,
         "index.html",
         {"title": "Polyglot Forge", "admin_configured": bool(ADMIN_TOKEN)},
+    )
+
+
+@app.get("/languages", response_class=HTMLResponse)
+def languages_page(request: Request, q: str = ""):
+    query = (q or "").strip()[:80]
+    entries = [language_entry(str(item.get("code", ""))) for item in LANGUAGES]
+
+    groups: List[Dict[str, Any]] = []
+    results: List[Dict[str, Any]] = []
+    if query:
+        needle = _search_key(query)
+        results = [
+            entry
+            for entry in entries
+            if needle in _search_key(entry.get("native"))
+            or needle in _search_key(entry.get("en"))
+            or needle in _search_key(entry.get("code"))
+            or needle in _search_key(_script_label(str(entry.get("script", ""))))
+        ]
+
+        def rank(entry: Dict[str, Any]) -> Tuple[int, int, str]:
+            code = _search_key(entry.get("code"))
+            en = _search_key(entry.get("en"))
+            if code == needle:
+                return (0, -int(entry.get("speakers", 0)), code)
+            if en.startswith(needle):
+                return (1, -int(entry.get("speakers", 0)), code)
+            return (2, -int(entry.get("speakers", 0)), code)
+
+        results.sort(key=rank)
+    else:
+        buckets: Dict[str, List[Dict[str, Any]]] = {}
+        for entry in entries:
+            buckets.setdefault(str(entry.get("script", "Zyyy")), []).append(entry)
+        for script, items in buckets.items():
+            groups.append(
+                {
+                    "script": script,
+                    "label": _script_label(script),
+                    "dir": str(items[0].get("dir", "ltr")),
+                    "count": len(items),
+                    "speakers": sum(int(x.get("speakers", 0)) for x in items),
+                    "languages": items,
+                }
+            )
+        groups.sort(key=lambda g: (-int(g["speakers"]), str(g["label"])))
+
+    return render(
+        request,
+        "languages.html",
+        {
+            "query": query,
+            "results": results,
+            "result_count": len(results),
+            "groups": groups,
+            "rtl_count": sum(1 for entry in entries if entry.get("dir") == "rtl"),
+            "ltr_count": sum(1 for entry in entries if entry.get("dir") != "rtl"),
+        },
     )
 
 

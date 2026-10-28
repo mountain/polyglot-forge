@@ -6,6 +6,53 @@
     {{ t("index.lead") }}
   </p>
 
+  <section class="panel language-panel" aria-labelledby="language-heading">
+    <div class="language-current">
+      <h2 id="language-heading">{{ t("nav.language") }}</h2>
+      <span class="lang-native lang-current-name" lang="{{ current_language.code }}" dir="{{ current_language.dir }}">{{ current_language.native }}</span>
+      <span class="lang-en" lang="en" dir="ltr">{{ current_language.en }}</span>
+      {% if current_language.dir == "rtl" %}
+        <span class="tag">{{ t("lang.rtl") }}</span>
+      {% endif %}
+      {% if current_language.ui_percent > 0 %}
+        <span class="tag">{{ t("lang.coverage", pct=current_language.ui_percent) }}</span>
+      {% else %}
+        <span class="tag">{{ t("lang.fallback") }}</span>
+      {% endif %}
+    </div>
+
+    {% if suggested_languages %}
+      <div class="lang-section">
+        <div class="lang-heading">{{ t("lang.suggested") }}</div>
+        <div class="lang-chips">
+          {% for l in suggested_languages %}
+            <a class="lang-chip" href="{{ lang_url(l.code) }}" hreflang="{{ l.code }}">
+              <span class="lang-native" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.native }}</span>
+              <span class="lang-en" lang="en" dir="ltr">{{ l.en }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="lang-section">
+      <div class="lang-heading">{{ t("lang.top") }}</div>
+      <div class="lang-chips">
+        {% for l in top_languages %}
+          <a class="lang-chip" href="{{ lang_url(l.code) }}" hreflang="{{ l.code }}">
+            <span class="lang-native" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.native }}</span>
+            <span class="lang-en" lang="en" dir="ltr">{{ l.en }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="lang-section">
+      <a class="lang-all" href="/languages">{{ t("lang.all", count=language_count) }}</a>
+      <span class="muted"> · {{ t("lang.search") }}</span>
+    </div>
+  </section>
+
   <div class="grid">
     <a class="card" href="/room/arena">
       <h2>{{ t("nav.arena") }}</h2>

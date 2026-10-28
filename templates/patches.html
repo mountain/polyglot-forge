@@ -7,7 +7,7 @@
     <form class="panel" method="post" action="/patches/new">
       <div class="row">
         <label>{{ t("form.author") }}</label>
-        <input name="author" maxlength="80" required />
+        <input name="author" maxlength="80" dir="auto" required />
       </div>
       <div class="row">
         <label>Proposal ID (optional)</label>
@@ -15,7 +15,7 @@
       </div>
       <div class="row">
         <label>Unified Diff</label>
-        <textarea name="diff_text" rows="10" maxlength="200000" placeholder="*** Begin Patch ..." required></textarea>
+        <textarea name="diff_text" rows="10" maxlength="200000" dir="ltr" placeholder="*** Begin Patch ..." required></textarea>
       </div>
       <button type="submit">{{ t("btn.submit_patch") }}</button>
       <div class="muted">{{ t("patches.note") }}</div>
@@ -42,9 +42,9 @@
         <tr>
           <td><a href="/patches/{{ p.id }}">#{{ p.id }}</a></td>
           <td class="muted">{{ p.proposal_id or "" }}</td>
-          <td>{{ p.author }}</td>
+          <td><bdi>{{ p.author }}</bdi></td>
           <td><span class="tag">{{ p.status }}</span></td>
-          <td class="muted">{{ p.created_at }}</td>
+          <td class="muted" dir="ltr">{{ p.created_at }}</td>
         </tr>
       {% endfor %}
     </tbody>

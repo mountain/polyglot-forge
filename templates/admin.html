@@ -17,14 +17,14 @@
     <tbody>
       {% for a in pending %}
         <tr>
-          <td>{{ a.name }}</td>
-          <td class="muted">{{ a.x_handle or "" }}</td>
+          <td><bdi>{{ a.name }}</bdi></td>
+          <td class="muted"><bdi>{{ a.x_handle or "" }}</bdi></td>
           <td class="muted">
             {% if a.claim_tweet_url %}
               <a href="{{ a.claim_tweet_url }}" target="_blank" rel="noreferrer">open</a>
             {% endif %}
           </td>
-          <td class="muted"><code>{{ a.claim_token }}</code></td>
+          <td class="muted"><code dir="ltr">{{ a.claim_token }}</code></td>
           <td>
             <form method="post" action="/admin/verify">
               <input type="hidden" name="claim_token" value="{{ a.claim_token }}" />

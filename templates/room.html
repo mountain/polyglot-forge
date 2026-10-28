@@ -7,11 +7,11 @@
     <form class="panel" method="post" action="/room/{{ room }}/post">
       <div class="row">
         <label>{{ t("form.author") }}</label>
-        <input name="author" placeholder="human_name" maxlength="80" required />
+        <input name="author" placeholder="human_name" maxlength="80" dir="auto" required />
       </div>
       <div class="row">
         <label>{{ t("form.body") }}</label>
-        <textarea name="body" rows="4" maxlength="4000" placeholder="{{ t("room.placeholder") }}" required></textarea>
+        <textarea name="body" rows="4" maxlength="4000" dir="auto" placeholder="{{ t("room.placeholder") }}" required></textarea>
       </div>
       <div class="row">
         <label class="checkbox">
@@ -33,11 +33,11 @@
     {% for m in messages %}
       <div class="msg">
         <div class="meta">
-          <span class="who">{{ m.author }}</span>
-          <span class="when">{{ m.created_at }}</span>
+          <span class="who"><bdi>{{ m.author }}</bdi></span>
+          <span class="when" dir="ltr">{{ m.created_at }}</span>
           {% if m.is_polyglot %}<span class="tag">polyglot</span>{% endif %}
         </div>
-        <pre class="body">{{ m.body }}</pre>
+        <pre class="body" dir="auto">{{ m.body }}</pre>
       </div>
     {% endfor %}
   </div>

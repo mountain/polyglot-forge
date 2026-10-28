@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ lang }}">
+<html lang="{{ lang }}" dir="{{ dir }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,12 +15,36 @@
           <a href="/proposals">{{ t("nav.proposals") }}</a>
           <a href="/patches">{{ t("nav.patches") }}</a>
           <a href="/rules">{{ t("nav.rules") }}</a>
-          <span class="lang">
-            <span class="muted">{{ t("nav.language") }}:</span>
-            {% for code in supported_langs %}
-              <a class="{% if code == lang %}active{% endif %}" href="{{ request.url.path }}?lang={{ code }}">{{ code|upper }}</a>
-            {% endfor %}
-          </span>
+          <details class="lang-menu">
+            <summary class="lang-summary">
+              <span class="muted">{{ t("nav.language") }}</span>
+              <bdi lang="{{ current_language.code }}" dir="{{ current_language.dir }}">{{ current_language.native }}</bdi>
+              <span aria-hidden="true">▾</span>
+            </summary>
+            <div class="lang-panel">
+              {% if suggested_languages %}
+                <div class="lang-group">
+                  <div class="lang-heading">{{ t("lang.suggested") }}</div>
+                  {% for l in suggested_languages %}
+                    <a class="lang-option" href="{{ lang_url(l.code) }}" hreflang="{{ l.code }}">
+                      <span class="lang-native" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.native }}</span>
+                      <span class="lang-en" lang="en" dir="ltr">{{ l.en }}</span>
+                    </a>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <div class="lang-group">
+                <div class="lang-heading">{{ t("lang.top") }}</div>
+                {% for l in top_languages %}
+                  <a class="lang-option" href="{{ lang_url(l.code) }}" hreflang="{{ l.code }}">
+                    <span class="lang-native" lang="{{ l.code }}" dir="{{ l.dir }}">{{ l.native }}</span>
+                    <span class="lang-en" lang="en" dir="ltr">{{ l.en }}</span>
+                  </a>
+                {% endfor %}
+              </div>
+              <a class="lang-all" href="/languages">{{ t("lang.all", count=language_count) }}</a>
+            </div>
+          </details>
         </nav>
       </div>
     </header>
