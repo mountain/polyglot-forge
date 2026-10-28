@@ -73,8 +73,8 @@ I18N: Dict[str, Dict[str, str]] = {
         "ru": "Арена",
         "it": "Arena",
         "pl": "Arena",
-        "zh": "Arena",
-        "ja": "Arena",
+        "zh": "竞技场",
+        "ja": "アリーナ",
     },
     "nav.proposals": {
         "en": "Proposals",
@@ -779,6 +779,20 @@ def get_lang(request: Request) -> str:
     return DEFAULT_LANG
 
 
+# Room identifiers are stable keys (URLs / API / DB); only their display labels are localized.
+ROOM_NAME_KEYS: Dict[str, str] = {
+    "arena": "nav.arena",
+}
+
+
+def room_display_name(room: str, lang: str) -> str:
+    key = ROOM_NAME_KEYS.get(room)
+    if not key:
+        return room
+    entry = I18N.get(key, {})
+    return entry.get(lang) or entry.get(DEFAULT_LANG) or room
+
+
 def make_t(lang: str):
     def t(key: str, **kwargs) -> str:
         entry = I18N.get(key, {})
@@ -1170,7 +1184,12 @@ def room_page(room: str, request: Request, conn=Depends(get_db)):
         )
         rows = cur.fetchall()
     rows.reverse()
-    return render(request, "room.html", {"room": room, "messages": rows})
+    lang = get_lang(request)
+    return render(
+        request,
+        "room.html",
+        {"room": room, "room_label": room_display_name(room, lang), "messages": rows},
+    )
 
 
 @app.post("/room/{room}/post")

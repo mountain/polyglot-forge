@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Arena - {{ room }}{% endblock %}
+{% block title %}{{ room_label }} - {{ t("brand") }}{% endblock %}
 {% block content %}
-  <h1>{{ t("room.title", room=room) }}</h1>
+  <h1>{{ t("room.title", room=room_label) }}</h1>
 
   {% if human_web_write_enabled %}
     <form class="panel" method="post" action="/room/{{ room }}/post">
