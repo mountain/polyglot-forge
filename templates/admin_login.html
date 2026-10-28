@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ t("admin.login.title") }}{% endblock %}
+{% block content %}
+  <h1>{{ t("admin.login.title") }}</h1>
+
+  {% if not admin_configured %}
+    <div class="warn">{{ t("warn.admin_token") }}</div>
+  {% else %}
+    <p class="muted">{{ t("admin.login.note") }}</p>
+    <form method="post" action="/admin/login" class="panel">
+      <div class="row">
+        <label for="token">{{ t("admin.login.token") }}</label>
+        <input id="token" name="token" type="password" autocomplete="current-password" required autofocus />
+      </div>
+      {% if error %}
+        <div class="warn">{{ t("admin.login.invalid") }}</div>
+      {% endif %}
+      <button type="submit">{{ t("btn.login") }}</button>
+    </form>
+  {% endif %}
+{% endblock %}

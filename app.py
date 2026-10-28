@@ -584,6 +584,76 @@ I18N: Dict[str, Dict[str, str]] = {
         "zh": "仅用于 v0 人工 verify。用请求头 X-Admin-Token 访问 /admin，或只在首次访问时用 /admin?token=... 写入 cookie。",
         "ja": "v0 手動検証用。/admin は X-Admin-Token で開くか、/admin?token=... を一度だけ開いて cookie を設定。",
     },
+    "admin.login.title": {
+        "en": "Admin login",
+        "ceb": "Admin login",
+        "de": "Admin-Anmeldung",
+        "fr": "Connexion admin",
+        "sv": "Admininloggning",
+        "nl": "Admin-login",
+        "es": "Acceso admin",
+        "ru": "Вход администратора",
+        "it": "Accesso admin",
+        "pl": "Logowanie admina",
+        "zh": "管理员登录",
+        "ja": "管理者ログイン",
+    },
+    "admin.login.note": {
+        "en": "Enter ADMIN_TOKEN to manage agent verification.",
+        "ceb": "Isulod ang ADMIN_TOKEN aron ma-manage ang agent verification.",
+        "de": "ADMIN_TOKEN eingeben, um die Agent-Verifizierung zu verwalten.",
+        "fr": "Saisis ADMIN_TOKEN pour gérer la vérification des agents.",
+        "sv": "Ange ADMIN_TOKEN för att hantera agentverifiering.",
+        "nl": "Voer ADMIN_TOKEN in om agentverificatie te beheren.",
+        "es": "Introduce ADMIN_TOKEN para gestionar la verificación de agentes.",
+        "ru": "Введите ADMIN_TOKEN для управления проверкой агентов.",
+        "it": "Inserisci ADMIN_TOKEN per gestire la verifica degli agent.",
+        "pl": "Wpisz ADMIN_TOKEN, aby zarządzać weryfikacją agentów.",
+        "zh": "输入 ADMIN_TOKEN 以管理 agent 验证。",
+        "ja": "ADMIN_TOKEN を入力してエージェント検証を管理します。",
+    },
+    "admin.login.token": {
+        "en": "Admin token",
+        "ceb": "Admin token",
+        "de": "Admin-Token",
+        "fr": "Jeton admin",
+        "sv": "Admin-token",
+        "nl": "Admin-token",
+        "es": "Token de admin",
+        "ru": "Токен администратора",
+        "it": "Token admin",
+        "pl": "Token admina",
+        "zh": "管理员令牌",
+        "ja": "管理者トークン",
+    },
+    "admin.login.invalid": {
+        "en": "Invalid token.",
+        "ceb": "Sayop nga token.",
+        "de": "Ungültiger Token.",
+        "fr": "Jeton invalide.",
+        "sv": "Ogiltig token.",
+        "nl": "Ongeldig token.",
+        "es": "Token inválido.",
+        "ru": "Неверный токен.",
+        "it": "Token non valido.",
+        "pl": "Nieprawidłowy token.",
+        "zh": "令牌无效。",
+        "ja": "トークンが正しくありません。",
+    },
+    "btn.login": {
+        "en": "Sign in",
+        "ceb": "Sign in",
+        "de": "Anmelden",
+        "fr": "Se connecter",
+        "sv": "Logga in",
+        "nl": "Inloggen",
+        "es": "Entrar",
+        "ru": "Войти",
+        "it": "Accedi",
+        "pl": "Zaloguj",
+        "zh": "登录",
+        "ja": "ログイン",
+    },
     "btn.mark_verified": {
         "en": "Mark verified",
         "ceb": "Mark verified",
@@ -929,17 +999,53 @@ def hash_api_key(api_key: str) -> str:
     return hashlib.sha256(api_key.encode("utf-8")).hexdigest()
 
 
+def _const_eq(a: str, b: str) -> bool:
+    return secrets.compare_digest(a.encode("utf-8"), b.encode("utf-8"))
+
+
+def _admin_cookie_value() -> str:
+    # Store only a digest in the cookie: tokens may contain characters that are
+    # invalid in Cookie headers (e.g. backslash), and the raw token need not be
+    # exposed to the browser.
+    return hashlib.sha256(f"admin:{ADMIN_TOKEN}".encode("utf-8")).hexdigest()
+
+
+def _admin_token_matches(candidate: str) -> bool:
+    return bool(candidate) and bool(ADMIN_TOKEN) and _const_eq(candidate, ADMIN_TOKEN)
+
+
+def is_admin_authenticated(request: Request) -> bool:
+    if not ADMIN_TOKEN:
+        return False
+    # Prefer headers over query strings to avoid leaking tokens via referrers/logs.
+    header = request.headers.get("x-admin-token", "")
+    if header and _const_eq(header, ADMIN_TOKEN):
+        return True
+    query_token = request.query_params.get("token", "")
+    if query_token and _const_eq(query_token, ADMIN_TOKEN):
+        return True
+    cookie = request.cookies.get("admin_token", "")
+    return bool(cookie) and _const_eq(cookie, _admin_cookie_value())
+
+
 def require_admin(request: Request) -> None:
     if not ADMIN_TOKEN:
         raise HTTPException(status_code=403, detail="ADMIN_TOKEN not configured")
-    # Prefer headers over query strings to avoid leaking tokens via referrers/logs.
-    token = (
-        request.headers.get("x-admin-token", "")
-        or request.cookies.get("admin_token", "")
-        or request.query_params.get("token", "")
-    )
-    if token != ADMIN_TOKEN:
+    if not is_admin_authenticated(request):
         raise HTTPException(status_code=403, detail="forbidden")
+
+
+def set_admin_cookie(response: Response) -> Response:
+    # Only set Secure if explicitly configured; Railway is HTTPS but local dev might be HTTP.
+    response.set_cookie(
+        "admin_token",
+        _admin_cookie_value(),
+        max_age=60 * 60 * 12,
+        httponly=True,
+        samesite="lax",
+        secure=ADMIN_COOKIE_SECURE,
+    )
+    return response
 
 
 def maybe_set_admin_cookie(request: Request, response: Response) -> Response:
@@ -947,17 +1053,8 @@ def maybe_set_admin_cookie(request: Request, response: Response) -> Response:
     If /admin is accessed with ?token=... and it's correct, set an HttpOnly cookie and
     allow subsequent admin actions without keeping the token in the URL.
     """
-    tok = request.query_params.get("token", "")
-    if tok and tok == ADMIN_TOKEN:
-        # Only set Secure if explicitly configured; Railway is HTTPS but local dev might be HTTP.
-        response.set_cookie(
-            "admin_token",
-            tok,
-            max_age=60 * 60 * 12,
-            httponly=True,
-            samesite="lax",
-            secure=ADMIN_COOKIE_SECURE,
-        )
+    if _admin_token_matches(request.query_params.get("token", "")):
+        return set_admin_cookie(response)
     return response
 
 def api_key_from_request(request: Request, payload_key: Optional[str]) -> str:
@@ -1309,11 +1406,25 @@ def claim_submit(token: str, request: Request, tweet_url: str = Form(...), conn=
 
 @app.get("/admin", response_class=HTMLResponse)
 def admin_page(request: Request, conn=Depends(get_db)):
-    require_admin(request)
+    if not ADMIN_TOKEN:
+        return render(
+            request,
+            "admin_login.html",
+            {"admin_configured": False, "error": False},
+        )
+
     # If admin enters via /admin?token=..., set cookie and redirect to clean URL.
-    if request.query_params.get("token", "") == ADMIN_TOKEN:
+    if _admin_token_matches(request.query_params.get("token", "")):
         resp = RedirectResponse(url="/admin", status_code=303)
-        return maybe_set_admin_cookie(request, resp)
+        return set_admin_cookie(resp)
+
+    if not is_admin_authenticated(request):
+        return render(
+            request,
+            "admin_login.html",
+            {"admin_configured": True, "error": bool(request.query_params.get("token"))},
+        )
+
     with conn.cursor() as cur:
         cur.execute(
             """
@@ -1327,6 +1438,24 @@ def admin_page(request: Request, conn=Depends(get_db)):
         pending = cur.fetchall()
     resp = render(request, "admin.html", {"pending": pending})
     return maybe_set_admin_cookie(request, resp)
+
+
+@app.post("/admin/login", response_class=HTMLResponse)
+def admin_login(request: Request, token: str = Form("")):
+    if not ADMIN_TOKEN:
+        return render(
+            request,
+            "admin_login.html",
+            {"admin_configured": False, "error": False},
+        )
+    if not _admin_token_matches(token.strip()):
+        return render(
+            request,
+            "admin_login.html",
+            {"admin_configured": True, "error": True},
+        )
+    resp = RedirectResponse(url="/admin", status_code=303)
+    return set_admin_cookie(resp)
 
 
 @app.post("/admin/verify")
