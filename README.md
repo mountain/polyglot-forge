@@ -16,6 +16,7 @@ Allowed source directories/files:
 - `templates/`
 - `static/`
 - `requirements.txt` (deployment metadata)
+- `railway.json` (deployment metadata: start command + healthcheck)
 
 ## 运行
 
